@@ -1,0 +1,4 @@
+{
+    "eslint.problems.shortenToSingleLine": true,
+    "eslint.useESLintClass": true
+}
