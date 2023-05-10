@@ -32,8 +32,8 @@ function Login() {
                     <Link
                         to="/signup" className="text-blue-500">
                         <p className="text-gray-500 text-center">Don't have an account?</p>
-                        Sign Up</Link>
-                    {/* <p className="text-gray-500">Don't have an account?</p> */}
+                        Sign Up
+                        </Link>
                 </form>
             </div>
         </div>

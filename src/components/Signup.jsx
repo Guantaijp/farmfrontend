@@ -1,6 +1,7 @@
 import React from "react";
 import {useContext, useState} from 'react'
 import {AuthContext} from './AuthContext'
+import { Link } from "react-router-dom";
 
 function Signup () {
 
@@ -13,10 +14,16 @@ function Signup () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+       if (name && email && phone && password) {
         register(name, email, phone, password)
+       }
+       else {
+              alert('Please fill in all fields')
+         }
+
     }
 
-    console.log(name, email, phone, password)
+  
 
     return (
         <div className="flex flex-col items-center justify-center h-screen w-screen bg-gray-100 ">
@@ -31,6 +38,12 @@ function Signup () {
                     <button className="px-9 py-3 mb-2 text-lg text-white bg-black rounded-full shadow-md hover:bg-gray-900">
                      Sign Up
                 </button>
+                {/* if you have an account can login */}
+                 <Link
+                    to="/login" className="text-blue-500">
+                    <p className="text-gray-500 text-center">Already have an account?</p>
+                    Login
+                    </Link> 
              
                 </form>
             </div>

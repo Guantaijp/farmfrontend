@@ -30,12 +30,24 @@ function SideBar() {
   
   const user = JSON.parse(sessionStorage.getItem("user"));
   
-  const admin = admins.find((admin) => admin.id === user.id);
+  // const admin = admins.find((admin) => admin.id === user.id);
+  // this is bringing id error once it reloads the page correct it
+  const admin = admins.find((admin) => admin.id === user?.id);
+
   
   const navigate = useNavigate();
   const triggerLogout = () => {
-    logout();
+    // logout();
+    // navigate("/login");
+    sessionStorage.removeItem("jwtToken");
+    sessionStorage.removeItem("user");
+    sessionStorage.clear();
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("user");
+    localStorage.clear();
+
     navigate("/login");
+    console.log("logged out");
   };
 
   return (

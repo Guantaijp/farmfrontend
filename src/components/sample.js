@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
 // import React, { useState, useEffect } from 'react';
 // import SideBar from './components/SideBar';
 // import Dashboard from './components/Dashboard';
@@ -9,6 +7,7 @@
 // import AuthProvider from './components/AuthContext';
 // import Login from './components/Login';
 // import Signup from './components/Signup';
+// import Dairy from './components/Dairy';
 
 
 // function App() {
@@ -17,27 +16,30 @@
 //   const [loading, setLoading] = useState(true);
 
 //   useEffect(() => {
-//     // check if the user is authenticated
-//     if (!isLoggedIn) {
-//       navigate('/login');
+//     // check if the user is authenticated, except for the signup page
+//     if (isLoggedIn && window.location.pathname !== '/signup') {
+//       setLoading(false);
 //     } else {
 //       setLoading(false);
 //     }
-//   }, [isLoggedIn, navigate]);
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
+//   }, [isLoggedIn]);
 
 //   return (
 //     <AuthProvider>
-//       <div className="flex flex-row">
-//         <Routes className="flex flex-col w-full">
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/signup" element={<Signup />} />
-//           <Route path="/" element={<AuthenticatedRoutes />} />
-//         </Routes>
-//       </div>
+//       {loading ? (
+//         <div>Loading...</div>
+//       ) : (
+//         <div className="flex flex-row">
+//           <Routes className="flex flex-col w-full">
+//             <Route path="/login" element={<Login />} />
+//             <Route path="/signup" element={<Signup />} />
+//             <Route path="/" element={[<SideBar/>,<Dashboard />]} />
+//             <Route path="/account" element={[<SideBar/>,<Account />]} />
+//             <Route path="/input" element={[<SideBar/>,<AnimalInput />]} />
+//             <Route path="/dairy" element={[<SideBar/>,<Dairy />]} />
+//           </Routes>
+//         </div>
+//       )}
 //     </AuthProvider>
 //   );
 // }
@@ -45,10 +47,11 @@
 // function AuthenticatedRoutes() {
 //   return (
 //     <>
-//       <SideBar />
+
+     
 //       <div className="flex flex-col w-full">
 //         <Routes className="flex flex-col w-full">
-//           <Route path="/" element={<Dashboard />} />
+//           <Route path="/" element={<Dashboard />} /> 
 //           <Route path="/account" element={<Account />} />
 //           <Route path="/input" element={<AnimalInput />} />
 //         </Routes>

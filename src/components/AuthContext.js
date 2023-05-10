@@ -53,40 +53,35 @@ const login = (email, password) => {
   };
 
     // Register
-    const register = (name, email,phone, password) => {
-    fetch('http://127.0.0.1:3000/admins', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({name,email,phone,password })
-    })
-    .then(res => res.json())
-    .then((response) => {
-        setOnChange(!change)
-        if(response.error){
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: response.error,
-              })
-             } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Registration Successful',
-                text: 'Please login to continue',
-                })
-                navigate('/login')
-             }
-    })
-    }
+    const register = (name, email, phone, password) => {
+      fetch('http://127.0.0.1:3000/admins', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, phone, password })
+      })
+      .then(res => res.json())
+      .then((response) => {
+          setOnChange(!change);
+          if (response.error) {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: response.error,
+              });
+          } else {
+              sessionStorage.setItem('isRegistered', true);
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Registration Successful',
+                  text: 'Please login to continue',
+              });
+              navigate('/login');
+          }
+      });
+  };
 
-    // Logout
-    const logout = ()=>{
-     sessionStorage.clear();
-        navigate('/login')
-    }
-    // check if user is logged in
     const useAuth = () => {
    
         const jwt = sessionStorage.getItem('jwtToken');
@@ -101,7 +96,7 @@ const login = (email, password) => {
         user,
         login,
         register,
-        logout,
+        // logout,
         useAuth,
     }
 

@@ -14,16 +14,20 @@ function App() {
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    // check if the user is authenticated
-    if (!isLoggedIn) {
+    const pathname = window.location.pathname;
+  
+    // check if the user is authenticated, except for the signup page
+    if (isLoggedIn && pathname !== '/signup') {
+      setLoading(false);
+    } else if (!isLoggedIn && pathname !== '/login' && pathname !== '/signup') {
       navigate('/login');
-      
+      setLoading(false);
     } else {
       setLoading(false);
     }
   }, [isLoggedIn, navigate]);
+  
 
   return (
     <AuthProvider>
