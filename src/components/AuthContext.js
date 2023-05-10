@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 
@@ -69,6 +69,7 @@ const login = (email, password) => {
                   icon: 'error',
                   title: 'Oops...',
                   text: response.error,
+                  timer: 1500,
               });
           } else {
               sessionStorage.setItem('isRegistered', true);
@@ -76,6 +77,7 @@ const login = (email, password) => {
                   icon: 'success',
                   title: 'Registration Successful',
                   text: 'Please login to continue',
+                  timer: 1500,
               });
               navigate('/login');
           }

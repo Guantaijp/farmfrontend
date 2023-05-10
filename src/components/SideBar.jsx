@@ -7,19 +7,20 @@ import { GiCow } from 'react-icons/gi';
 import { SiGitea } from 'react-icons/si';
 import { AuthContext } from './AuthContext';
 import { useNavigate } from "react-router-dom";
+import Profile from './images/images.jpeg';
 
 function SideBar() {
 
   const [admins, setAdmins] = useState([]);
   const [image, setImage] = useState('');
   const [name, setName] = useState('');
-  
+
   const { logout } = useContext(AuthContext);
   const isLoggedIn = sessionStorage.getItem("jwtToken") ? true : false;
-  
+
   // get admins
   useEffect(() => {
-    fetch("http://localhost:3000/admins") 
+    fetch("http://localhost:3000/admins")
       .then((res) => res.json())
       .then((data) => {
         setAdmins(data);
@@ -27,14 +28,14 @@ function SideBar() {
         setName(data[0]?.name || ''); // set a default value for name
       });
   }, []);
-  
+
   const user = JSON.parse(sessionStorage.getItem("user"));
-  
+
   // const admin = admins.find((admin) => admin.id === user.id);
   // this is bringing id error once it reloads the page correct it
   const admin = admins.find((admin) => admin.id === user?.id);
 
-  
+
   const navigate = useNavigate();
   const triggerLogout = () => {
     // logout();
@@ -45,32 +46,46 @@ function SideBar() {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("user");
     localStorage.clear();
-
     navigate("/login");
-    console.log("logged out");
   };
 
   return (
 
     <div style={{ background: '#000', color: '#fff', padding: '5px', flexDirection: 'column', width: '380px', height: '100vh', }} >
       {/* should be responsive to small screens */}
-    
+
       <div className="flex flex-col m-6 justify-start">
         {/* PROFILE IMAGE  */}
         <div className="flex flex-row ">
           {/* profile image */}
-          <img
+          {/* <img
             src={admin?.image_url}
             alt="profile"
             className="rounded-full h-24 w-24 mr-2"
+          /> */}
+          {/* if the user  dont have an image put the CgProfile icon */}
+          {!admin?.image_url ? (
+            // <CgProfile className="rounded-full h-24 w-24 mr-2" />
+            <img
+            className='rounded-full h-24 w-24 mr-3'
+            src={Profile}
+            alt="profile"
           />
+          ) : (
+            <img
+              src={admin?.image_url}
+              alt="profile"
+              className="rounded-full h-24 w-24 mr-3"
+            />
+          )}
+
 
           <div className="flex flex-col justify-center">
-            
+
             <h1 className="text-2xl font-bold">
               {user?.name}
             </h1>
-            <p className="text-start">Welcome Back </p>
+            <p className="text-start">Welcome Back !</p>
           </div>
         </div>
         {/* hr */}
@@ -80,7 +95,6 @@ function SideBar() {
           {/* icon */}
 
           {/* Dashboard */}
-          {/* <Link to="/" className='text-start text-2xl font-bold text-white hover:text-gray-400'>Dashboard</Link> */}
           <Link to="/" className="flex flex-row mb-8">
             < BiHomeAlt2 className='text-3xl text-white hover:text-gray-400 mr-2' />
             < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Dashboard</h1>
