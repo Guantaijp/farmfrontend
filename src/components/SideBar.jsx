@@ -1,36 +1,63 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// CgProfile
 import { CgProfile } from 'react-icons/cg';
-// AiOutlineLogout
 import { AiOutlineLogout } from 'react-icons/ai';
-// GrHome
 import { BiHomeAlt2 } from 'react-icons/bi';
-// GiCow
 import { GiCow } from 'react-icons/gi';
-// SiGitea
 import { SiGitea } from 'react-icons/si';
+import { AuthContext } from './AuthContext';
+import { useNavigate } from "react-router-dom";
 
 function SideBar() {
+
+  const [admins, setAdmins] = useState([]);
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
+  
+  const { logout } = useContext(AuthContext);
+  const isLoggedIn = sessionStorage.getItem("jwtToken") ? true : false;
+  
+  // get admins
+  useEffect(() => {
+    fetch("http://localhost:3000/admins") 
+      .then((res) => res.json())
+      .then((data) => {
+        setAdmins(data);
+        setImage(data[0]?.image_url || ''); // set a default value for image
+        setName(data[0]?.name || ''); // set a default value for name
+      });
+  }, []);
+  
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  
+  const admin = admins.find((admin) => admin.id === user.id);
+  
+  const navigate = useNavigate();
+  const triggerLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
-    <div
-      style={{
-        background: '#000',
-        color: '#fff',
-        padding: '5px',
-        flexDirection: 'column',
-        width: '400px',
-        height: '100vh',
-      }}
-    >
+
+    <div style={{ background: '#000', color: '#fff', padding: '5px', flexDirection: 'column', width: '380px', height: '100vh', }} >
       {/* should be responsive to small screens */}
+    
       <div className="flex flex-col m-6 justify-start">
         {/* PROFILE IMAGE  */}
         <div className="flex flex-row ">
+          {/* profile image */}
+          <img
+            src={admin?.image_url}
+            alt="profile"
+            className="rounded-full h-24 w-24 mr-2"
+          />
 
-          <img className='rounded-full h-20 w-20 m-4' src='https://images.unsplash.com/photo-1612837017391-0e3b5a2b0b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXR5JTIwY2FyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80' />
           <div className="flex flex-col justify-center">
-            <h1 className="text-2xl font-bold">Guantai</h1>
+            
+            <h1 className="text-2xl font-bold">
+              {user?.name}
+            </h1>
             <p className="text-start">Welcome Back </p>
           </div>
         </div>
@@ -54,11 +81,11 @@ function SideBar() {
           </Link>
 
           {/* Tea */}
-          <Link to="/tea" className="flex flex-row mb-8">
+          <Link to="/input" className="flex flex-row mb-8">
             < SiGitea className='text-3xl text-white hover:text-gray-400 mr-2' />
             < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Tea Farming</h1>
           </Link>
-        
+
           {/* appear in the bottom  */}
           <div className="flex flex-col justify-end fixed bottom-0 left-0 right-0 p-5">
             <Link to="/account" className="flex flex-row mb-5">
@@ -67,15 +94,18 @@ function SideBar() {
             </Link>
 
             {/* logout */}
-            <Link to="/logout" className="flex flex-row mb-5 ">
+
+            <button onClick={triggerLogout} className='text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400'>
               <AiOutlineLogout className='text-3xl text-white hover:text-gray-400 mr-2' />
-              <h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Logout</h1>
-            </Link>
+              Logout
+            </button>
           </div>
         </div>
       </div>
 
     </div>
+
+
   );
 }
 
