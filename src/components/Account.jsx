@@ -4,13 +4,14 @@ import SideBar from './SideBar'
 function Account() {
   return (
     <>
-
-    {/* <SideBar /> */}
-    <div className="p-5 text-gray-400 flex flex-col gap-5 justify-start">
-
-      <h1
-        className="text-2xl text-black  font-bold">Account</h1>
-    </div>
+      <div className="p-5 flex flex-col">
+        <div className="flex flex-row m-4">
+          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
+          </div>
+          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
+          </div>
+        </div>
+      </div>
     </>
   )
 }

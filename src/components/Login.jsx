@@ -26,7 +26,7 @@ function Login() {
                     <input
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-blue-400"
+                        className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
                         type="email"
                         id="email"
                         name="email"
@@ -39,7 +39,7 @@ function Login() {
                     <input
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-blue-400"
+                        className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
                         type="password"
                         id="password"
                         name="password"
@@ -48,7 +48,7 @@ function Login() {
                     />
                 </div>
                 <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-black hover:bg-grey-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
                 >
                     Login

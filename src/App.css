@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,153 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+
+nav{
+	position:absolute;
+	top:0;
+	left:0;
+	display:flex;
+	flex-direction:column;
+	justify-content: space-between;
+	width: 380px;
+	min-height: 100vh;
+	background-color: #000;
+	padding:2rem 1rem 1rem 1rem;
+	transition: transform 1s;
+  color: #fff;
+}
+
+.navbar{
+	transform: translateX(-100%);
+}
+
+.nav-btn{
+	position: absolute;
+	transform: translateX(38px);
+	top: 20px;
+	right: 0;
+	width:40px;
+	height: 60px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #000;
+	outline: none;
+	border: none;
+	font-size: 1rem;
+	padding: 5px 10px;
+	cursor: pointer;
+	color: #fff;
+}
+
+.logo{
+	display: block;
+	width: 100px;
+	margin: auto;
+	background:transparent;
+}
+
+.logo img{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.nav-link{
+	display: flex;
+	align-items: center;
+	color: #fff;
+	text-decoration: none;
+	padding: 10px 1rem;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+
+.nav-link:hover{
+	background-color:#AFB4FF;
+	color: #4e4e4e;
+}
+
+.nav-link span{
+	margin-left: 10px;
+}
+
+.nav-top{
+	margin-top: 10rem;
+}
+
+.mobile-nav{
+	background-color:#000;
+	width: 100%;
+	height:40px;
+	display: none;
+}
+
+.mobile-nav-btn{
+	color: #fff;
+	background: transparent;
+	outline: none;
+	border: none;
+	margin: 0 10px;
+}
+
+@media only screen and (max-width: 768px){
+	nav{
+		width: 40%;
+		padding: 10px;
+	}
+}
+
+@media only screen and (max-width: 768px){
+	.mobile-nav{
+		display: flex;
+		align-items: center;
+	}
+	nav{
+		width: 50%;
+		top: 38px;
+		min-height: calc(100vh - 38px);
+	}
+
+	.nav-btn{
+		display: none;
+	}
+}
+
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.App{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100vh;
+}
+
+.page{
+	flex-basis: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: margin-left 1s;
+}
+
+.page-with-navbar{
+	margin-left: 15%;
+}
+
+@media only screen and (max-width: 768px){
+	.page-with-navbar{
+		width: 100%;
+		margin-left: 0;
+	}
+
 }

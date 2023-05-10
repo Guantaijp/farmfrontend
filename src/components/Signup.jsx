@@ -36,7 +36,7 @@ function Signup () {
                 <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-blue-400"
+                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-black"
                     type="name"
                     id="name"
                     name="name"
@@ -49,7 +49,7 @@ function Signup () {
                 <input
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-blue-400"
+                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-black"
                     type="email"
                     id="email"
                     name="email"
@@ -62,7 +62,7 @@ function Signup () {
                 <input
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-blue-400"
+                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-black"
                     type="phone"
                     id="phone"
                     name="phone"
@@ -75,7 +75,7 @@ function Signup () {
                 <input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-blue-400"
+                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-black"
                     type="password"
                     id="password"
                     name="password"
@@ -84,7 +84,7 @@ function Signup () {
                 />
             </div>
             <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-black hover:bg-grey-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
             >
                 Sign Up
@@ -94,58 +94,6 @@ function Signup () {
             </p>
         </form>
     </div>
-
-//     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw', backgroundColor: '#F3F4F6' }}>
-//   <div className="flex flex-col items-center justify-center bg-white h-screen w-screen">
-//     <h1 className="text-4xl mt-5 font-bold">Sign Up</h1>
-//     <p className="text-gray-500">Create an account</p>
-//     <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center w-96 h-96">
-//       <input
-//         value={name}
-//         onChange={(e) => setName(e.target.value)}
-//         type="text"
-//         placeholder="Name"
-//         className="border-2 border-gray-400 rounded-lg w-96 h-10 mt-5 mx-2"
-//         required
-//       />
-//       <input
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//         type="email"
-//         placeholder="Email"
-//         className="border-2 border-gray-400 rounded-lg w-96 h-10 mt-5"
-//         required
-//       />
-//       <input
-//         value={phone}
-//         onChange={(e) => setPhone(e.target.value)}
-//         type="tel"
-//         placeholder="Phone Number"
-//         className="border-2 border-gray-400 rounded-lg w-96 h-10 mt-5"
-//         required
-//       />
-//       <input
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//         type="password"
-//         placeholder="Password"
-//         className="border-2 border-gray-400 rounded-lg w-96 h-10 mt-5"
-//         required
-//       />
-//       <button className="px-9 py-3 mb-2 text-lg text-white bg-black rounded-full shadow-md hover:bg-gray-900">
-//         Sign Up
-//       </button>
-//       {/* if you have an account can login */}
-//       <Link to="/login" className="text-blue-500 mt-2">
-//         <p className="text-gray-500 text-center">
-//           Already have an account?
-//         </p>
-//         Login
-//       </Link>
-//     </form>
-//   </div>
-// </div>
-
     )
 }
 
