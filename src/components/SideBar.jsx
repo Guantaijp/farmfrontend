@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -16,41 +16,38 @@ import {
   FaAngleRight,
   FaAngleLeft,
 } from "react-icons/fa";
-
+import { useAdminData } from './AdminData' 
 
 
 
 function SideBar({ visible, show }) {
 
-  const [admins, setAdmins] = useState([]);
-  const [image, setImage] = useState('');
-  const [name, setName] = useState('');
+  const {updateFields, updateImage } = useAdminData();
 
-  const { logout } = useContext(AuthContext);
-  const isLoggedIn = sessionStorage.getItem("jwtToken") ? true : false;
+  // // //get data fromthe updateFields function
+    const { admin,
+       setAdmins,setImage, setName, setEmail, setPhone,
+       } = useAdminData();
 
-  // get admins
+  // // Get admins
   useEffect(() => {
-    fetch("http://localhost:3000/admins")
+    fetch('http://localhost:3000/admins')
       .then((res) => res.json())
       .then((data) => {
         setAdmins(data);
-        setImage(data[0]?.image_url || ''); // set a default value for image
-        setName(data[0]?.name || ''); // set a default value for name
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const admin = data.find((admin) => admin.id === user.id);
+        if (admin) {
+          setImage(admin.image_url || '');
+          setName(admin.name || '');
+        
+        }
       });
   }, []);
-
-  const user = JSON.parse(sessionStorage.getItem("user"));
-
-  // const admin = admins.find((admin) => admin.id === user.id);
-  // this is bringing id error once it reloads the page correct it
-  const admin = admins.find((admin) => admin.id === user?.id);
 
 
   const navigate = useNavigate();
   const triggerLogout = () => {
-    // logout();
-    // navigate("/login");
     sessionStorage.removeItem("jwtToken");
     sessionStorage.removeItem("user");
     sessionStorage.clear();
@@ -62,7 +59,6 @@ function SideBar({ visible, show }) {
 
   return (
     <>
-
       <div className="mobile-nav">
         <button
           className="mobile-nav-btn"
@@ -73,62 +69,61 @@ function SideBar({ visible, show }) {
       </div>
       <nav className={!visible ? 'navbar' : ''}>
         <button
-					type="button"
-					className="nav-btn"
-					onClick={() => show(!visible)}
-				>
-					{ !visible
-						? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
-				</button>
-
-<div className="flex flex-col m-6 justify-start">
-        <div className="flex flex-row ">
-          {!admin?.image_url ? (
-            <img
-            className='rounded-full h-24 w-24 mr-3'
-            src={Profile}
-            alt="profile"
-          />
-          ) : (
-            <img
-              src={admin?.image_url}
-              alt="profile"
-              className="rounded-full h-24 w-24 mr-3"
-            />
-          )}
-          <div className="flex flex-col justify-center">
-            <h1 className="text-2xl font-bold">
-              {user?.name}
-            </h1>
-            <p className="text-start">Welcome Back !</p>
+          type="button"
+          className="nav-btn"
+          onClick={() => show(!visible)}
+        >
+          {!visible
+            ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
+        </button>
+        <div className="flex flex-col m-6 justify-start">
+          <div className="flex flex-row ">
+            {!admin?.image_url ? (
+              <img
+                className='rounded-full h-24 w-24 mr-3'
+                src={Profile}
+                alt="profile"
+              />
+            ) : (
+              <img
+                src={admin?.image_url}
+                alt="profile"
+                className="rounded-full h-24 w-24 mr-3"
+              />
+            )}
+            <div className="flex flex-col justify-center">
+              <h1 className="text-2xl font-bold">
+                {admin?.name}
+              </h1>
+              <p className="text-start">Welcome Back !</p>
+            </div>
           </div>
-        </div>
-        <hr className='border-gray-400 mt-5 mb-5' />
-        <div className="flex flex-col m-2">
-          <Link to="/" className="flex flex-row mb-8">
-            < BiHomeAlt2 className='text-3xl text-white hover:text-gray-400 mr-2' />
-            < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Dashboard</h1>
-          </Link>
-          <Link to="/dairy" className="flex flex-row mb-8">
-            <GiCow className='text-3xl text-white hover:text-gray-400 mr-2' />
-            < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Dairy Farming</h1>
-          </Link>
-          <Link to="/input" className="flex flex-row mb-8">
-            < SiGitea className='text-3xl text-white hover:text-gray-400 mr-2' />
-            < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Tea Farming</h1>
-          </Link>
-          <div className="flex flex-col justify-end fixed bottom-0 left-0 right-0 p-5">
-            <Link to="/account" className="flex flex-row mb-5">
-              <CgProfile className='text-3xl text-white hover:text-gray-400 mr-2' />
-              <h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>My Account</h1>
+          <hr className='border-gray-400 mt-5 mb-5' />
+          <div className="flex flex-col m-2">
+            <Link to="/" className="flex flex-row mb-8">
+              < BiHomeAlt2 className='text-3xl text-white hover:text-gray-400 mr-2' />
+              < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Dashboard</h1>
             </Link>
-            <button onClick={triggerLogout} className='text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400'>
-              <AiOutlineLogout className='text-3xl text-white hover:text-gray-400 mr-2' />
-              Logout
-            </button>
+            <Link to="/dairy" className="flex flex-row mb-8">
+              <GiCow className='text-3xl text-white hover:text-gray-400 mr-2' />
+              < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Dairy Farming</h1>
+            </Link>
+            <Link to="/input" className="flex flex-row mb-8">
+              < SiGitea className='text-3xl text-white hover:text-gray-400 mr-2' />
+              < h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>Tea Farming</h1>
+            </Link>
+            <div className="flex flex-col justify-end fixed bottom-0 left-0 right-0 p-5">
+              <Link to="/account" className="flex flex-row mb-5">
+                <CgProfile className='text-3xl text-white hover:text-gray-400 mr-2' />
+                <h1 className='text-start text-2xl font-bold text-white hover:text-gray-400'>My Account</h1>
+              </Link>
+              <button onClick={triggerLogout} className='text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400'>
+                <AiOutlineLogout className='text-3xl text-white hover:text-gray-400 mr-2' />
+                Logout
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       </nav>
     </>
   );
