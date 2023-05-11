@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react'
+import { useState,useEffect } from 'react';
 
 export const useAdminData = () => {
     const [name, setName] = useState('');
@@ -88,7 +88,7 @@ export const useAdminData = () => {
         .then((data) => {
           setAdmins(data);
           const user = JSON.parse(sessionStorage.getItem('user'));
-          const admin = data.find((admin) => admin.id === user.id);
+          const admin = admins.find((admin) => admin.id === user.id) || {};
           if (admin) {
             setImage(admin.image_url || '');
             setName(admin.name || '');
@@ -96,7 +96,7 @@ export const useAdminData = () => {
             setPhone(admin.phone || '');
           }
         });
-    }, []);
+    }, [admins]);
   
     const user = JSON.parse(sessionStorage.getItem('user'));
     const admin = admins.find((admin) => admin.id === user.id) || {};
@@ -107,6 +107,7 @@ export const useAdminData = () => {
           setImage, setName, setEmail, setPhone,
           handleNameChange, handleEmailChange, 
           handlePhoneChange, handleImageChange,
+          
           handleSubmit, updateImage, updateFields}
 
 }

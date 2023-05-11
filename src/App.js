@@ -12,6 +12,7 @@ import Dairy from './components/Dairy';
 function App() {
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const pathname = window.location.pathname;
@@ -45,20 +46,20 @@ function App() {
   );
 }
 
-function AuthenticatedRoutes() {
-  return (
-    <>
+// function AuthenticatedRoutes() {
+//   return (
+//     <>
 
      
-      <div className="flex flex-col w-full">
-        <Routes className="flex flex-col w-full">
-          <Route path="/" element={<Dashboard />} /> 
-          <Route path="/account" element={<Account />} />
-          <Route path="/input" element={<AnimalInput />} />
-        </Routes>
-      </div>
-    </>
-  );
-}
+//       <div className="flex flex-col w-full">
+//         <Routes className="flex flex-col w-full">
+//           <Route path="/" element={<Dashboard />} /> 
+//           <Route path="/account" element={<Account />} />
+//           <Route path="/input" element={<AnimalInput />} />
+//         </Routes>
+//       </div>
+//     </>
+//   );
+// }
 
 export default App;

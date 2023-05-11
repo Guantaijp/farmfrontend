@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Profile from './images/images.jpeg';
-import { useParams } from 'react-router-dom';
 
 
 

@@ -1,50 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { BiHomeAlt2 } from 'react-icons/bi';
 import { GiCow } from 'react-icons/gi';
 import { SiGitea } from 'react-icons/si';
-import { AuthContext } from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import Profile from './images/images.jpeg';
 import { FaBars } from 'react-icons/fa';
-// GiHamburgerMenu
-import { GiHamburgerMenu } from 'react-icons/gi';
 import "../App.css"
-import {
-  FaAngleRight,
-  FaAngleLeft,
-} from "react-icons/fa";
+import {FaAngleRight, FaAngleLeft} from "react-icons/fa";
 import { useAdminData } from './AdminData' 
 
 
 
 function SideBar({ visible, show }) {
 
-  const {updateFields, updateImage } = useAdminData();
-
-  // // //get data fromthe updateFields function
-    const { admin,
-       setAdmins,setImage, setName, setEmail, setPhone,
-       } = useAdminData();
-
-  // // Get admins
-  useEffect(() => {
-    fetch('http://localhost:3000/admins')
-      .then((res) => res.json())
-      .then((data) => {
-        setAdmins(data);
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        const admin = data.find((admin) => admin.id === user.id);
-        if (admin) {
-          setImage(admin.image_url || '');
-          setName(admin.name || '');
-        
-        }
-      });
-  }, []);
-
+    const { admin } = useAdminData();
 
   const navigate = useNavigate();
   const triggerLogout = () => {

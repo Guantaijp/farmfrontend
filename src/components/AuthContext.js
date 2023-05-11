@@ -9,8 +9,6 @@ export default function AuthProvider({ children }) {
     const [user, setUser] = useState();
     const [change, setOnChange] = useState(false);
     
-
-
 // login
 const login = (email, password) => {
    
