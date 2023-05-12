@@ -11,7 +11,8 @@ function Footer() {
         padding: '0.75rem',
         display: 'flex',
         flexDirection: 'column',
-    }}
+        
+        }}
      className="footer-container">
       <hr className="border-gray-400" />
       <div className="text-center text-black font-semibold text-sm">

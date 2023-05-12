@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Profile from './images/images.jpeg';
+import Footer from './Footer';
 
 
 
@@ -114,16 +115,21 @@ function Account() {
   const user = JSON.parse(sessionStorage.getItem('user'));
   const admin = admins.find((admin) => admin.id === user.id) || {};
   return (
+
     <>
-      <div className="p-5 flex flex-col">
-        <div className="flex flex-row m-4 justify-center gap-8">
-          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
+      <div 
+        style={{backgroundColor: "#F5F5F5"}}
+        className="flex flex-col ml-0 lg:ml-80 ">
+        <p className="text-4xl font-bold text-center">My Account</p>
+        <div className="flex flex-row flex-wrap m-4 justify-center gap-5">
+          <div 
+          className="flex flex-col bg-white p-10 rounded-lg shadow-lg w-full sm:w-auto">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-center">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center flex-col">
                   <label htmlFor="image" className="text-lg font-bold cursor-pointer">
                     {!admin?.image_url ? (
-                      <img className='rounded-full h-24 w-24 mr-3' src={Profile} alt="profile" />
+                      <img className="rounded-full h-24 w-24 mr-3" src={Profile} alt="profile" />
                     ) : (
                       <img className="rounded-full h-24 w-24 mr-3" src={admin?.image_url} alt="profile" />
                     )}
@@ -145,7 +151,7 @@ function Account() {
                   name="name"
                   id="name"
                   placeholder="Name"
-                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent sm:w-full"
                 />
                 <label htmlFor="email" className="text-lg font-bold">Email</label>
                 <input
@@ -155,7 +161,7 @@ function Account() {
                   name="email"
                   id="email"
                   placeholder="Email"
-                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent sm:w-full"
                 />
                 <label htmlFor="phone" className="text-lg font-bold">Phone Number</label>
                 <input
@@ -165,121 +171,118 @@ function Account() {
                   name="phone"
                   id="phone"
                   placeholder="Phone Number"
-                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent sm:w-full"
                 />
-
-                <button className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
+                <button
+                  className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 mt-2 rounded focus:outline-none focus:shadow-outline w-full"
+                  type="submit"
+                >
+                  Update
+                </button>
               </div>
             </form>
-
           </div>
 
           {/* //==========//==========//==========//\\==========\\==========\\==========\\ */}
-          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
-          <div className='flex flex-row gap-5 '>
-            <form  className="flex flex-col gap-5 items-center">
-              <div className="flex flex-col gap-2">
-                {/* <label htmlFor="name" className="text-lg font-bold">Delete Account</label> */}
-                <p className="text-lg font-bold">Delete Cow</p>
+          <div 
+          className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-5">
+              <form className="flex flex-col gap-5 items-center">
                 <div className="flex flex-col gap-2">
-                  <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
-                    <option value="1">Delete Account</option>
-                    <option value="2">Delete Account</option>
-                    <option value="3">Delete Account</option>
-                    <option value="4">Delete Account</option>
-                  </select>
+                  <p className="text-lg font-bold">Delete Cow</p>
+                  <div className="flex flex-col gap-2">
+                    <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
+                      <option value="1">Delete Account</option>
+                      <option value="2">Delete Account</option>
+                      <option value="3">Delete Account</option>
+                      <option value="4">Delete Account</option>
+                    </select>
                   </div>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
+                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
                 </div>
-            </form>
-                <form  className="flex flex-col gap-5 items-center">
-              <div className="flex flex-col gap-2">
-                {/* <label htmlFor="name" className="text-lg font-bold">Delete Account</label> */}
-                <p className="text-lg font-bold">Delete Farm</p>
-                {/* add a selector */}
+              </form>
+              <form className="flex flex-col gap-5 items-center">
                 <div className="flex flex-col gap-2">
-                  <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
-                    <option value="1">Delete Account</option>
-                    <option value="2">Delete Account</option>
-                    <option value="3">Delete Account</option>
-                    <option value="4">Delete Account</option>
-                  </select>
+                  <p className="text-lg font-bold">Delete Farm</p>
+                  <div className="flex flex-col gap-2">
+                    <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
+                      <option value="1">Delete Account</option>
+                      <option value="2">Delete Account</option>
+                      <option value="3">Delete Account</option>
+                      <option value="4">Delete Account</option>
+                    </select>
                   </div>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
+                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
                 </div>
-            </form>
+              </form>
             </div>
-            <div className='flex flex-col gap-5 mt-5'>
-            <form  className="flex flex-col gap-5 items-center">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="name" className="text-lg font-bold">Print Invoce</label>
-                {/* add a selector */}
+            <div className="flex flex-col gap-5 mt-5">
+              <form className="flex flex-col gap-5 items-center">
                 <div className="flex flex-col gap-2">
-                  <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
-                    <option value="1">Delete Account</option>
-                    <option value="2">Delete Account</option>
-                    <option value="3">Delete Account</option>
-                    <option value="4">Delete Account</option>
-                  </select>
+                  <label htmlFor="name" className="text-lg font-bold">Print Invoice</label>
+                  <div className="flex flex-col gap-2">
+                    <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
+                      <option value="1">Delete Account</option>
+                      <option value="2">Delete Account</option>
+                      <option value="3">Delete Account</option>
+                      <option value="4">Delete Account</option>
+                    </select>
                   </div>
-                <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Print</button>
+                  <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Print</button>
                 </div>
-            </form>
-            </div> 
+              </form>
+            </div>
           </div>
+
         </div>
         {/* price setting and  */}
-        <div className="flex flex-col bg-white p-10  items-center">
+        <div className="flex flex-col p-10 items-center">
           <p className="text-2xl font-bold">Price Setting</p>
-          <div className='flex flex-row gap-5 '>
-          <form  className="flex flex-col gap-5 items-center">
+          <div className="flex flex-col sm:flex-row gap-5">
+            <form className="flex flex-col gap-5 items-center">
               <div className="flex flex-col gap-2">
-                {/* add a selector */}
                 <div className="flex flex-col gap-2">
-                <div className="flex flex-row gap-2">
-                <div className='flex flex-col gap-2'>
-                <label htmlFor="price" className="text-lg font-bold">Current Milk Price: Ksh</label>
-                <input
-                  type="number"
-                  name="price"
-                  id="price"
-                  placeholder="Milk sPrice"
-                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
-                />
-                <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
-
-                </div>
-                <p className="text-lg font-bold"></p>
-                </div>
+                  <div className="flex flex-row sm:flex-col gap-2">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="milkPrice" className="text-lg font-bold">Current Milk Price: Ksh</label>
+                      <input
+                        type="number"
+                        name="milkPrice"
+                        id="milkPrice"
+                        placeholder="Milk Price"
+                        className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                      />
+                      <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
+                    </div>
+                    <p className="text-lg font-bold"></p>
                   </div>
                 </div>
+              </div>
             </form>
-            <form  className="flex flex-col gap-5 items-center">
+            <form className="flex flex-col gap-5 items-center">
               <div className="flex flex-col gap-2">
-                {/* add a selector */}
                 <div className="flex flex-col gap-2">
-                <div className="flex flex-row gap-2">
-                <div className='flex flex-col gap-2'>
-                <label htmlFor="price" className="text-lg font-bold">Current Tea Price: Ksh</label>
-                <input
-                  type="number"
-                  name="price"
-                  id="price"
-                  placeholder="Tea Price"
-                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
-                />
-                <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
-
-                </div>
-                <p className="text-lg font-bold"></p>
-                </div>
+                  <div className="flex flex-row sm:flex-col gap-2">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="teaPrice" className="text-lg font-bold">Current Tea Price: Ksh</label>
+                      <input
+                        type="number"
+                        name="teaPrice"
+                        id="teaPrice"
+                        placeholder="Tea Price"
+                        className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                      />
+                      <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
+                    </div>
+                    <p className="text-lg font-bold"></p>
                   </div>
                 </div>
+              </div>
             </form>
-            </div>
-            </div>
+          </div>
+        </div>
+        <Footer />
       </div>
-
     </>
   )
 }

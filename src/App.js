@@ -8,6 +8,7 @@ import AuthProvider from './components/AuthContext';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dairy from './components/Dairy';
+import Footer from './components/Footer';
 
 function App() {
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
@@ -27,16 +28,17 @@ function App() {
       setLoading(false);
     }
   }, [isLoggedIn, navigate]);
+
   const [navVisible, showNavbar] = useState(false);
 
   return (
     <AuthProvider>
       <div className="App">
 				
-        <Routes className="flex flex-col w-full">
+        <Routes className="">
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard />]} />
+          <Route path="/" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
           <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account />]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalInput />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy />]} />
