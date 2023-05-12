@@ -96,7 +96,7 @@ export const useAdminData = () => {
             setPhone(admin.phone || '');
           }
         });
-    }, [admins]);
+    }, []);
   
     const user = JSON.parse(sessionStorage.getItem('user'));
     const admin = admins.find((admin) => admin.id === user.id) || {};

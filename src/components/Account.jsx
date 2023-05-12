@@ -9,19 +9,19 @@ function Account() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [image, setImage] = useState('');
-  
+
   const handleNameChange = (event) => setName(event.target.value);
   const handleEmailChange = (event) => setEmail(event.target.value);
   const handlePhoneChange = (event) => setPhone(event.target.value);
   const handleImageChange = (event) => setImage(event.target.files[0]);
-  
+
   const updateImage = () => {
     const formData = new FormData();
     formData.append('image', image);
-  
+
     const user = JSON.parse(sessionStorage.getItem('user'));
     const adminId = user.id;
-  
+
     fetch(`http://localhost:3000/admins/${adminId}`, {
       method: 'PATCH',
       body: formData,
@@ -41,13 +41,12 @@ function Account() {
       })
       .catch((error) => console.error(error));
   };
-  
+
   const updateFields = () => {
     const data = JSON.stringify({ name, email, phone });
-  
     const user = JSON.parse(sessionStorage.getItem('user'));
     const adminId = user.id;
-  
+
     fetch(`http://localhost:3000/admins/${adminId}`, {
       method: 'PATCH',
       body: data,
@@ -62,7 +61,7 @@ function Account() {
         setName(data.name || '');
         setEmail(data.email || '');
         setPhone(data.phone || '');
-  
+
         // Update the admins state to trigger re-render
         setAdmins((prevAdmins) => {
           const updatedAdmins = prevAdmins.map((admin) =>
@@ -73,14 +72,12 @@ function Account() {
       })
       .catch((error) => console.error(error));
   };
-  
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
-  
     // Update the image
     updateImage();
-  
+
     // Update the other fields
     updateFields();
     // reload the page
@@ -92,27 +89,34 @@ function Account() {
   // Get admins
   useEffect(() => {
     fetch('http://localhost:3000/admins')
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch admins');
+        }
+        return res.json();
+      })
       .then((data) => {
         setAdmins(data);
         const user = JSON.parse(sessionStorage.getItem('user'));
         const admin = data.find((admin) => admin.id === user.id);
         if (admin) {
-          setImage(admin.image_url || '');
-          setName(admin.name || '');
-          setEmail(admin.email || '');
-          setPhone(admin.phone || '');
+          setName(admin.name);
+          setEmail(admin.email);
+          setPhone(admin.phone);
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error state or display an error message
       });
   }, []);
 
   const user = JSON.parse(sessionStorage.getItem('user'));
   const admin = admins.find((admin) => admin.id === user.id) || {};
-
   return (
     <>
       <div className="p-5 flex flex-col">
-        <div className="flex flex-row m-4 justify-center">
+        <div className="flex flex-row m-4 justify-center gap-8">
           <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-center">
               <div className="flex flex-col gap-2">
@@ -169,11 +173,113 @@ function Account() {
             </form>
 
           </div>
-          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
 
+          {/* //==========//==========//==========//\\==========\\==========\\==========\\ */}
+          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
+          <div className='flex flex-row gap-5 '>
+            <form  className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col gap-2">
+                {/* <label htmlFor="name" className="text-lg font-bold">Delete Account</label> */}
+                <p className="text-lg font-bold">Delete Cow</p>
+                <div className="flex flex-col gap-2">
+                  <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
+                    <option value="1">Delete Account</option>
+                    <option value="2">Delete Account</option>
+                    <option value="3">Delete Account</option>
+                    <option value="4">Delete Account</option>
+                  </select>
+                  </div>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
+                </div>
+            </form>
+                <form  className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col gap-2">
+                {/* <label htmlFor="name" className="text-lg font-bold">Delete Account</label> */}
+                <p className="text-lg font-bold">Delete Farm</p>
+                {/* add a selector */}
+                <div className="flex flex-col gap-2">
+                  <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
+                    <option value="1">Delete Account</option>
+                    <option value="2">Delete Account</option>
+                    <option value="3">Delete Account</option>
+                    <option value="4">Delete Account</option>
+                  </select>
+                  </div>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
+                </div>
+            </form>
+            </div>
+            <div className='flex flex-col gap-5 mt-5'>
+            <form  className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="name" className="text-lg font-bold">Print Invoce</label>
+                {/* add a selector */}
+                <div className="flex flex-col gap-2">
+                  <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
+                    <option value="1">Delete Account</option>
+                    <option value="2">Delete Account</option>
+                    <option value="3">Delete Account</option>
+                    <option value="4">Delete Account</option>
+                  </select>
+                  </div>
+                <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Print</button>
+                </div>
+            </form>
+            </div> 
           </div>
         </div>
+        {/* price setting and  */}
+        <div className="flex flex-col bg-white p-10  items-center">
+          <p className="text-2xl font-bold">Price Setting</p>
+          <div className='flex flex-row gap-5 '>
+          <form  className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col gap-2">
+                {/* add a selector */}
+                <div className="flex flex-col gap-2">
+                <div className="flex flex-row gap-2">
+                <div className='flex flex-col gap-2'>
+                <label htmlFor="price" className="text-lg font-bold">Current Milk Price: Ksh</label>
+                <input
+                  type="number"
+                  name="price"
+                  id="price"
+                  placeholder="Milk sPrice"
+                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                />
+                <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
+
+                </div>
+                <p className="text-lg font-bold"></p>
+                </div>
+                  </div>
+                </div>
+            </form>
+            <form  className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col gap-2">
+                {/* add a selector */}
+                <div className="flex flex-col gap-2">
+                <div className="flex flex-row gap-2">
+                <div className='flex flex-col gap-2'>
+                <label htmlFor="price" className="text-lg font-bold">Current Tea Price: Ksh</label>
+                <input
+                  type="number"
+                  name="price"
+                  id="price"
+                  placeholder="Tea Price"
+                  className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
+                />
+                <button className="bg-black hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
+
+                </div>
+                <p className="text-lg font-bold"></p>
+                </div>
+                  </div>
+                </div>
+            </form>
+            </div>
+            </div>
       </div>
+
     </>
   )
 }
