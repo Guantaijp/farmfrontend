@@ -16,25 +16,7 @@ function Account({ cow, setCow }) {
   const [age, setAge] = useState('');
   const [breed, setBreed] = useState('');
   function handleSelectedChange(e) {
-    const selectedId = e.target.value;
-    setSelectedCowId(selectedId);
-
-    // Find the selected cow from the cow list
-    const selectedCow = cow.find((dairy) => dairy.cow_id === selectedId);
-
-    if (selectedCow) {
-      // Display the selected cow's details
-      setName(selectedCow.name);
-      setHealth(selectedCow.health);
-      setAge(selectedCow.age);
-      setBreed(selectedCow.breed);
-    } else {
-      // Clear the cow details if no cow is selected
-      setName('');
-      setHealth('');
-      setAge('');
-      setBreed('');
-    }
+    setSelectedCowId(e.target.value);
   }
 
   const handleNameChange = (event) => setName(event.target.value);
