@@ -1,15 +1,41 @@
 import React, { useState, useEffect } from 'react'
 import Profile from './images/images.jpeg';
 import Footer from './Footer';
+import Swal from 'sweetalert2';
 
 
 
-function Account() {
+function Account({ cow, setCow }) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [image, setImage] = useState('');
+  const [selectedCowId, setSelectedCowId] = useState(cow.cow_id);
+  const [health, setHealth] = useState('');
+  const [age, setAge] = useState('');
+  const [breed, setBreed] = useState('');
+  function handleSelectedChange(e) {
+    const selectedId = e.target.value;
+    setSelectedCowId(selectedId);
+
+    // Find the selected cow from the cow list
+    const selectedCow = cow.find((dairy) => dairy.cow_id === selectedId);
+
+    if (selectedCow) {
+      // Display the selected cow's details
+      setName(selectedCow.name);
+      setHealth(selectedCow.health);
+      setAge(selectedCow.age);
+      setBreed(selectedCow.breed);
+    } else {
+      // Clear the cow details if no cow is selected
+      setName('');
+      setHealth('');
+      setAge('');
+      setBreed('');
+    }
+  }
 
   const handleNameChange = (event) => setName(event.target.value);
   const handleEmailChange = (event) => setEmail(event.target.value);
@@ -74,6 +100,7 @@ function Account() {
       .catch((error) => console.error(error));
   };
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Update the image
@@ -114,10 +141,49 @@ function Account() {
 
   const user = JSON.parse(sessionStorage.getItem('user'));
   const admin = admins.find((admin) => admin.id === user.id) || {};
+  
+  const ownedCows = cow.filter((cow) => cow.admin_id === admin.id);
+  // console.log("ownedCows", ownedCows);
+
+
+  // =====DELETE A COW===== //
+  const handleDelete = () => {
+    // Delete cow and update state
+    fetch(`http://localhost:3000/cows/${selectedCowId}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Cow deleted successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });  
+        window.location.reload();
+
+      }
+      )
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong!',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      );
+
+  };
+  
+
+
   return (
 
     <>
-      <div style={{backgroundColor: "#F5F5F5"}}className="flex flex-col ml-0 lg:ml-80 ">
+      <div style={{ backgroundColor: "#F5F5F5" }} className="flex flex-col ml-0 lg:ml-80 ">
         <p className="text-4xl font-bold text-center">My Account</p>
         <div className="flex flex-row flex-wrap m-4 justify-center gap-5">
           <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg w-full sm:w-auto">
@@ -181,23 +247,31 @@ function Account() {
           </div>
 
           {/* //==========//==========//==========//\\==========\\==========\\==========\\ */}
-          <div 
-          className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
+          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg">
             <div className="flex flex-col sm:flex-row gap-5">
-              <form className="flex flex-col gap-5 items-center">
+              <div className="flex flex-col gap-5 items-center">
                 <div className="flex flex-col gap-2">
                   <p className="text-lg font-bold">Delete Cow</p>
                   <div className="flex flex-col gap-2">
-                    <select className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent">
-                      <option value="1">Delete Account</option>
-                      <option value="2">Delete Account</option>
-                      <option value="3">Delete Account</option>
-                      <option value="4">Delete Account</option>
+                    <select
+                      className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
+                      value={selectedCowId}
+                      onChange={handleSelectedChange}
+                    >
+                      <option value="">-- Select --</option>
+                      {ownedCows.map((dairy) => (
+                        <option key={dairy.cow_id} value={dairy.id}>{dairy.name}</option>
+                      ))}
                     </select>
+                    <button
+                      onClick={handleDelete}
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Delete</button>
                 </div>
-              </form>
+              </div>
               <form className="flex flex-col gap-5 items-center">
                 <div className="flex flex-col gap-2">
                   <p className="text-lg font-bold">Delete Farm</p>

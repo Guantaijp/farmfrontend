@@ -11,6 +11,52 @@ import Dairy from './components/Dairy/Dairy';
 
 
 function App() {
+
+  const [cow, setCow] = useState([]);
+  const [milk, setMilk] = useState([]);
+  const [cost, setCost] = useState([]);
+  const [sell, setSell] = useState([]);
+  const [price, setPrice] = useState([]);
+
+  // fetching the cow/animal data
+  useEffect(() => {
+    fetch('http://localhost:3000/cows')
+      .then((res) => res.json())
+      .then((data) => {
+        setCow(data);
+      });
+  }, []);
+
+  // fetching the milk data
+  useEffect(() => {
+    fetch('http://localhost:3000/milks')
+      .then((res) => res.json())
+      .then((data) => {
+        setMilk(data);
+      });
+  }, []);
+
+  // fetching the cost data
+  useEffect(() => {
+    fetch('http://localhost:3000/costs')
+      .then((res) => res.json())
+      .then((data) => {
+        setCost(data);
+      });
+  }, []);
+
+  // fetching the sell data
+  useEffect(() => {
+    fetch('http://localhost:3000/sells')
+      .then((res) => res.json())
+      .then((data) => {
+        setSell(data);
+      });
+  }, []);
+
+
+
+
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
   const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
@@ -38,10 +84,10 @@ function App() {
         <Routes className="">
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
-          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account />]} />
+          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
+          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow}/>]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable />]} />
-          <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy />]} />
+          <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} />]} />
 
         </Routes>
       </div>
