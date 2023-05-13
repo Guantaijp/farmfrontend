@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useContext, useState } from 'react'
-import { AuthContext } from './AuthContext'
+import { AuthContext } from '../AuthContext'
 
 function Login() {
 

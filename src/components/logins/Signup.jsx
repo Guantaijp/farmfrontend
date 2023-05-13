@@ -1,6 +1,6 @@
 import React from "react";
 import {useContext, useState} from 'react'
-import {AuthContext} from './AuthContext'
+import {AuthContext} from '../AuthContext'
 import { Link } from "react-router-dom";
 
 function Signup () {

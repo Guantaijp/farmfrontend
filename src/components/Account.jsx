@@ -117,13 +117,10 @@ function Account() {
   return (
 
     <>
-      <div 
-        style={{backgroundColor: "#F5F5F5"}}
-        className="flex flex-col ml-0 lg:ml-80 ">
+      <div style={{backgroundColor: "#F5F5F5"}}className="flex flex-col ml-0 lg:ml-80 ">
         <p className="text-4xl font-bold text-center">My Account</p>
         <div className="flex flex-row flex-wrap m-4 justify-center gap-5">
-          <div 
-          className="flex flex-col bg-white p-10 rounded-lg shadow-lg w-full sm:w-auto">
+          <div className="flex flex-col bg-white p-10 rounded-lg shadow-lg w-full sm:w-auto">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-center">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center flex-col">

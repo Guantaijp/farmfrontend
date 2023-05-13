@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import SideBar from './components/SideBar';
 import Dashboard from './components/Dashboard';
 import Account from './components/Account';
-import AnimalInput from './components/Dairy/AnimalInput';
+import AnimalTable from './components/Dairy/AnimalTable';
 import { Route,Routes, useNavigate} from 'react-router-dom';
 import AuthProvider from './components/AuthContext';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Dairy from './components/Dairy';
-import Footer from './components/Footer';
+import Login from './components/logins/Login';
+import Signup from './components/logins/Signup';
+import Dairy from './components/Dairy/Dairy';
+
 
 function App() {
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
@@ -40,8 +40,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
           <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account />]} />
-          <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalInput />]} />
+          <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy />]} />
+
         </Routes>
       </div>
     </AuthProvider>
