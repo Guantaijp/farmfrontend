@@ -1,8 +1,130 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Footer from '../Footer'
-
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
+import Swal from 'sweetalert2';
 
 function AnimalTable() {
+
+  // filter a date that is greater than the current date
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    // Compare year, month, and day components
+    const isSameDay = currentDate.getDate() === selectedDate.getDate();
+    const isSameMonth = currentDate.getMonth() === selectedDate.getMonth();
+    const isSameYear = currentDate.getFullYear() === selectedDate.getFullYear();
+
+    // Exclude if the selected date is the current day
+    if (isSameDay && isSameMonth && isSameYear) {
+      return true;
+    }
+
+    return currentDate.getTime() <= selectedDate.getTime();
+  };
+
+
+  // ===COST===\\
+  const [costDate, setCostDate] = useState(new Date());
+  const [costName, setCostName] = useState("");
+  const [costAmount, setCostAmount] = useState("");
+
+  const inputCostNameHandler = (e) => {
+    setCostName(e.target.value);
+  };
+
+  const inputCostAmountHandler = (e) => {
+    setCostAmount(e.target.value);
+  };
+
+  const submitCostHandler = (e) => {
+    e.preventDefault();
+
+    const costData = {
+      date: costDate,
+      item: costName,
+      price: costAmount,
+    };
+
+    fetch("http://localhost:3000/cost", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(costData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        Swal.fire({
+          icon: "success",
+          title: "Cost added successfully",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
+    setCostDate(new Date());
+    setCostName("");
+    setCostAmount("");
+  };
+
+
+
+  // ===SELL===\\
+  const [sellDate, setSellDate] = useState(new Date());
+  const [sellName, setSellName] = useState("");
+  const [sellAmount, setSellAmount] = useState("");
+
+  const inputSellNameHandler = (e) => {
+    setSellName(e.target.value);
+  };
+  const inputSellAmountHandler = (e) => {
+    setSellAmount(e.target.value);
+  };
+
+  const submitSellHandler = (e) => {
+    e.preventDefault();
+
+    const sellData = {
+      date: sellDate,
+      item: sellName,
+      price: sellAmount,
+    };
+
+    fetch("http://localhost:3000/sell", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(sellData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        Swal.fire({
+          icon: "success",
+          title: "Sell added successfully",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
+    setSellDate(new Date());
+    setSellName("");
+    setSellAmount("");
+  };
+
+
+
+
   return (
     <>
       <div style={{ backgroundColor: "#F5F5F5" }} className="flex flex-col ml-0 lg:ml-80 ">
@@ -113,8 +235,10 @@ function AnimalTable() {
         {/* input Sell and Cost  */}
 
         <div className="flex flex-row flex-wrap m-4 justify-center gap-5">
-        <div className="flex flex-col bg-white p-5 rounded-lg items-center">
-            <form className="flex flex-col bg-white rounded-lg">
+          <div className="flex flex-col bg-white p-5 rounded-lg items-center">
+            <form
+              onSubmit={submitCostHandler}
+              className="flex flex-col bg-white rounded-lg">
               <p className="text-3xl font-bold text-center">Input Cost</p>
               <div className="flex flex-col sm:flex-row gap-5">
                 <div className="mb-5 sm:w-1/2">
@@ -123,6 +247,8 @@ function AnimalTable() {
                     className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
                     type="text"
                     id="Item"
+                    value={costName}
+                    onChange={inputCostNameHandler}
                     name="Item"
                     placeholder="Item"
                     required
@@ -132,22 +258,23 @@ function AnimalTable() {
                   <label htmlFor="" className="block font-medium text-gray-600">Cost Price</label>
                   <input
                     className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
-                    type="text"
+                    type="number"
                     id="cost"
                     name="cost"
+                    value={costAmount}
+                    onChange={inputCostAmountHandler}
                     placeholder="cost"
                     required
                   />
                 </div>
                 <div className="mb-5 sm:w-1/2">
                   <label htmlFor="" className="block font-medium text-gray-600">Date</label>
-                  <input
-                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
-                    type="text"
-                    id="Date"
-                    name="Date"
-                    placeholder="Date"
-                    required
+                  <DatePicker
+                    className='border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black'
+                    showTimeSelect
+                    filterDate={filterPassedTime}
+                    selected={costDate}
+                    onChange={date => setCostDate(date)}
                   />
                 </div>
               </div>
@@ -160,7 +287,9 @@ function AnimalTable() {
           </div>
 
           <div className="flex flex-col bg-white p-5 rounded-lg items-center">
-            <form className="flex flex-col bg-white rounded-lg">
+            <form
+              onSubmit={submitSellHandler}
+              className="flex flex-col bg-white rounded-lg">
               <p className="text-3xl font-bold text-center">Input Sell</p>
               <div className="flex flex-col sm:flex-row gap-5">
                 <div className="mb-5 sm:w-1/2">
@@ -171,6 +300,8 @@ function AnimalTable() {
                     id="Item"
                     name="Item"
                     placeholder="Item"
+                    value={sellName}
+                    onChange={inputSellNameHandler}
                     required
                   />
                 </div>
@@ -182,18 +313,20 @@ function AnimalTable() {
                     id="Sell"
                     name="Sell"
                     placeholder="Sell"
+                    value={sellAmount}
+                    onChange={inputSellAmountHandler}
                     required
                   />
                 </div>
                 <div className="mb-5 sm:w-1/2">
                   <label htmlFor="" className="block font-medium text-gray-600">Date</label>
-                  <input
-                    className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
-                    type="text"
-                    id="Date"
-                    name="Date"
-                    placeholder="Date"
-                    required
+
+                  <DatePicker
+                    className='border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black'
+                    showTimeSelect
+                    filterDate={filterPassedTime}
+                    selected={sellDate}
+                    onChange={date => setSellDate(date)}
                   />
                 </div>
               </div>
