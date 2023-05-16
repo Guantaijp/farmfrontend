@@ -178,7 +178,6 @@ function Account({ cow, setCow }) {
                     ) : (
                       <img className="rounded-full h-24 w-24 mr-3" src={admin?.image_url} alt="profile" />
                     )}
-                    <div className="mt-2 text-sm text-gray-600"></div>
                   </label>
                   <input
                     onChange={handleImageChange}
