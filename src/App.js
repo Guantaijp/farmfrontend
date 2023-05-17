@@ -54,6 +54,17 @@ function App() {
       });
   }, []);
 
+  // fetching the price data
+  useEffect(() => {
+    fetch('http://localhost:3000/prices')
+      .then((res) => res.json())
+      .then((data) => {
+        setPrice(data);
+      });
+  }, []);
+
+
+
 
 
 
@@ -85,7 +96,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
-          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow}/>]} />
+          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} setprice/>]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} />]} />
 
@@ -94,21 +105,5 @@ function App() {
     </AuthProvider>
   );
 }
-
-// function AuthenticatedRoutes() {
-//   return (
-//     <>
-
-     
-//       <div className="flex flex-col w-full">
-//         <Routes className="flex flex-col w-full">
-//           <Route path="/" element={<Dashboard />} /> 
-//           <Route path="/account" element={<Account />} />
-//           <Route path="/input" element={<AnimalInput />} />
-//         </Routes>
-//       </div>
-//     </>
-//   );
-// }
 
 export default App;

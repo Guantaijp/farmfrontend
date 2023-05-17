@@ -5,16 +5,13 @@ import Swal from 'sweetalert2';
 
 
 
-function Account({ cow, setCow }) {
+function Account({ cow, setCow  }) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [image, setImage] = useState('');
   const [selectedCowId, setSelectedCowId] = useState(cow.cow_id);
-  const [health, setHealth] = useState('');
-  const [age, setAge] = useState('');
-  const [breed, setBreed] = useState('');
   function handleSelectedChange(e) {
     setSelectedCowId(e.target.value);
   }
@@ -123,7 +120,7 @@ function Account({ cow, setCow }) {
 
   const user = JSON.parse(sessionStorage.getItem('user'));
   const admin = admins.find((admin) => admin.id === user.id) || {};
-  
+
   const ownedCows = cow.filter((cow) => cow.admin_id === admin.id);
   // console.log("ownedCows", ownedCows);
 
@@ -142,7 +139,7 @@ function Account({ cow, setCow }) {
           text: 'Cow deleted successfully!',
           icon: 'success',
           confirmButtonText: 'OK',
-        });  
+        });
         window.location.reload();
 
       }
@@ -159,7 +156,64 @@ function Account({ cow, setCow }) {
       );
 
   };
+
+
+  // ===== MILK PRICE ===== //
+  const [milkPrice, setMilkPrice] = useState("");
+
+  const inputPriceHandler = (e) => {
+    setMilkPrice(e.target.value);
+  };
+
+
+  const submitMilkHandler = (e) => {
+    e.preventDefault();
+
+    const milkData = {
+      price: milkPrice,
+      admin_id: admin.id,
+    };
+
+    fetch(`http://localhost:3000/prices`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(milkData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPrices((prevPrices) => [...prevPrices, data]);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Milk price added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+        setMilkPrice("");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const [prices, setPrices] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/prices')
+      .then((res) => res.json())
+      .then((data) => {
+        setPrices(data);
+      
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   
+  const lastPriceAdmin = prices.filter((price) => price.admin_id === admin.id);
+  const lastPriceAdminId = lastPriceAdmin.length > 0 ? lastPriceAdmin[lastPriceAdmin.length - 1] : null;
+
 
 
   return (
@@ -291,16 +345,25 @@ function Account({ cow, setCow }) {
         <div className="flex flex-col p-10 items-center">
           <p className="text-2xl font-bold">Price Setting</p>
           <div className="flex flex-col sm:flex-row gap-5">
-            <form className="flex flex-col gap-5 items-center">
+            <form
+              onSubmit={submitMilkHandler}
+             className="flex flex-col gap-5 items-center">
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-row sm:flex-col gap-2">
                     <div className="flex flex-col gap-2">
-                      <label htmlFor="milkPrice" className="text-lg font-bold">Current Milk Price: Ksh</label>
+                      {lastPriceAdminId ? (
+                        <p className="text-lg font-bold">Current Milk Price: {lastPriceAdminId.price}</p>
+                      ) : (
+                        <p className="text-lg font-bold">Current Milk Price: 0</p>
+                      )}
+
                       <input
                         type="number"
                         name="milkPrice"
                         id="milkPrice"
+                        onChange={inputPriceHandler}
+                        value={milkPrice}
                         placeholder="Milk Price"
                         className="px-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
                       />
