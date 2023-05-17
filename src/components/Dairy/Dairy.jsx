@@ -209,21 +209,21 @@ function Dairy({ cow, setCow }) {
                   type="number" id="Cow Age" name="Cow Age" placeholder="Cow Age" required />
               </div>
             </div>
-           
-              <div className="flex items-start flex-col">
-                  <label htmlFor="image" className="  cursor-pointer">
-                    Cow Image
-                    
-                    <img src={selectedCow.image_url} alt="" className="w-20 h-20 object-cover " />
-                  </label>
-                  <input
-                    onChange={handleImageChange}
-                    type="file"
-                    name="image"
-                    id="image"
-                    className="hidden"
-                  />
-                </div>
+
+            <div className="flex items-start flex-col">
+              <label htmlFor="image" className="  cursor-pointer">
+                Cow Image
+
+                <img src={selectedCow.image_url} alt="" className="w-20 h-20 object-cover " />
+              </label>
+              <input
+                onChange={handleImageChange}
+                type="file"
+                name="image"
+                id="image"
+                className="hidden"
+              />
+            </div>
             <div className="mb-5">
               <label htmlFor="" className="block  font-medium text-gray-600">Cow Breed</label>
               <input className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"

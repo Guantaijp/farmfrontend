@@ -45,11 +45,11 @@ function Footer() {
         
         }}
      className="footer-container">
-      <hr className="border-gray-400" />
-      <div className="text-center text-black font-semibold text-sm">
+      <hr className="border-gray-400 ml-6" />
+      <div className="text-center text-black font-semibold  text-sm">
         © {new Date().getFullYear()} {admin.name} Farm | All Rights Reserved.
       </div>
-      <hr className="border-gray-400" />
+      <hr className="border-gray-400 ml-6" />
     </div>
   );
 }

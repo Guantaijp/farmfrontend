@@ -204,7 +204,6 @@ function Account({ cow, setCow  }) {
       .then((res) => res.json())
       .then((data) => {
         setPrices(data);
-      
       })
       .catch((error) => {
         console.error(error);

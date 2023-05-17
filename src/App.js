@@ -8,6 +8,7 @@ import AuthProvider from './components/AuthContext';
 import Login from './components/logins/Login';
 import Signup from './components/logins/Signup';
 import Dairy from './components/Dairy/Dairy';
+import DairyTable from './components/Dairy/DairyTable';
 
 
 function App() {
@@ -99,7 +100,8 @@ function App() {
           <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} setprice/>]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} />]} />
-
+          <Route path= "/dairytable" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<DairyTable cow={cow} setCow={setCow} milk={milk} setMilk={setMilk} cost={cost} setCost={setCost} sell={sell} setSell={setSell} price={price} setPrice={setPrice} />]} />
+          
         </Routes>
       </div>
     </AuthProvider>

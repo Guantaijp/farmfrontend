@@ -72,7 +72,7 @@ function SideBar({ visible, show }) {
                 Dashboard
               </h1>
             </Link>
-            <Link to="/dairy" className="flex flex-row mb-8">
+            <Link to="/dairytable" className="flex flex-row mb-8">
               <GiCow className="text-3xl text-white hover:text-gray-400 mr-2" />
               <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
                 Dairy Farming
