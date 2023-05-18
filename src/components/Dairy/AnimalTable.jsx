@@ -1,10 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../Footer'
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import Swal from 'sweetalert2';
+import moment from "moment";
 
-function AnimalTable() {
+function AnimalTable({ admins, setAdmins }) {
+
+
+  // const [admins, setAdmins] = useState([]);
+  // // Get admins
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/admins')
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error('Failed to fetch admins');
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setAdmins(data);
+
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       // Handle the error state or display an error message
+  //     });
+  // }, []);
+
+
+
 
   // filter a date that is greater than the current date
   const filterPassedTime = (time) => {
@@ -25,7 +50,24 @@ function AnimalTable() {
   };
 
 
+
+
   // ===COST===\\
+  const [cost, setCost] = useState([]);
+
+
+    // fetching the cost data
+    useEffect(() => {
+      fetch('http://localhost:3000/costs')
+        .then((res) => res.json())
+        .then((data) => {
+          setCost(data);
+        });
+    }, []);
+
+
+
+
   const [costDate, setCostDate] = useState(new Date());
   const [costName, setCostName] = useState("");
   const [costAmount, setCostAmount] = useState("");
@@ -41,10 +83,14 @@ function AnimalTable() {
   const submitCostHandler = (e) => {
     e.preventDefault();
 
+    const dateWithoutTime = moment(costDate).startOf('day')
+    const formattedDate = dateWithoutTime.format('YYYY-MM-DD')
+
     const costData = {
-      date: costDate,
+      date: formattedDate,
       item: costName,
       price: costAmount,
+      admin_id: admin.id,
     };
 
     fetch("http://localhost:3000/cost", {
@@ -54,7 +100,7 @@ function AnimalTable() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setCost([...cost, data]);
         Swal.fire({
           icon: "success",
           title: "Cost added successfully",
@@ -73,9 +119,18 @@ function AnimalTable() {
     setCostAmount("");
   };
 
-
-
   // ===SELL===\\
+  const [sell, setSell] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/sells')
+      .then((res) => res.json())
+      .then((data) => {
+        setSell(data);
+      });
+  }, []);
+
+
   const [sellDate, setSellDate] = useState(new Date());
   const [sellName, setSellName] = useState("");
   const [sellAmount, setSellAmount] = useState("");
@@ -89,11 +144,14 @@ function AnimalTable() {
 
   const submitSellHandler = (e) => {
     e.preventDefault();
+    const dateWithoutTime = moment(sellDate).startOf('day')
+    const formattedDate = dateWithoutTime.format('YYYY-MM-DD')
 
     const sellData = {
-      date: sellDate,
+      date: formattedDate,
       item: sellName,
       price: sellAmount,
+      admin_id: admin.id,
     };
 
     fetch("http://localhost:3000/sell", {
@@ -103,7 +161,7 @@ function AnimalTable() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setSell([...sell, data]);
         Swal.fire({
           icon: "success",
           title: "Sell added successfully",
@@ -122,6 +180,20 @@ function AnimalTable() {
     setSellAmount("");
   };
 
+
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const admin = admins.find((admin) => admin.id === user.id) || {};
+
+  //give me the array of cost that has the admin id of the current admin
+  const adminCost = cost.filter((cost) => cost.admin_id === admin.id);
+  //give me the array of sell that has the admin id of the current admin
+  const adminSell = sell.filter((sell) => sell.admin_id === admin.id);
+  //just show the last 5 cost
+  const lastFiveCost = adminCost.slice(Math.max(adminCost.length - 5, 0));
+  //just show the last 5 sell
+  const lastFiveSell = adminSell.slice(Math.max(adminSell.length - 5, 0));
+
+  
 
 
 
@@ -168,11 +240,9 @@ function AnimalTable() {
 
           </form>
         </div>
-        {/* Update with a selector where i can selsct a  cow*/}
         <div className="flex flex-row flex-wrap m-4 justify-center gap-5">
           <form className="flex flex-col bg-white p-5 rounded-lg shadow-lg">
             <p className="text-3xl font-bold text-center">Cost Table</p>
-            {/* table with Items, Cost Date */}
             <table className="table-auto">
               <thead>
                 <tr>
@@ -182,21 +252,13 @@ function AnimalTable() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">3</td>
-                </tr>
-                <tr className="bg-gray-100">
-                  <td className="border px-4 py-2">4</td>
-                  <td className="border px-4 py-2">5</td>
-                  <td className="border px-4 py-2">6</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">7</td>
-                  <td className="border px-4 py-2">8</td>
-                  <td className="border px-4 py-2">9</td>
-                </tr>
+                {lastFiveCost.map((cost) => (
+                  <tr key={cost.id}>
+                    <td className="border px-4 py-2">{cost.item}</td>
+                    <td className="border px-4 py-2">{cost.price}</td>
+                    <td className="border px-4 py-2">{cost.date}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </form>
@@ -212,21 +274,18 @@ function AnimalTable() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {/* <tr>
                   <td className="border px-4 py-2">1</td>
                   <td className="border px-4 py-2">2</td>
                   <td className="border px-4 py-2">3</td>
-                </tr>
-                <tr className="bg-gray-100">
-                  <td className="border px-4 py-2">4</td>
-                  <td className="border px-4 py-2">5</td>
-                  <td className="border px-4 py-2">6</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">7</td>
-                  <td className="border px-4 py-2">8</td>
-                  <td className="border px-4 py-2">9</td>
-                </tr>
+                </tr> */}
+                {lastFiveSell.map((sell) => (
+                  <tr key={sell.id}>
+                    <td className="border px-4 py-2">{sell.item}</td>
+                    <td className="border px-4 py-2">{sell.price}</td>
+                    <td className="border px-4 py-2">{sell.date}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </form>
@@ -285,7 +344,6 @@ function AnimalTable() {
               </div>
             </form>
           </div>
-
           <div className="flex flex-col bg-white p-5 rounded-lg items-center">
             <form
               onSubmit={submitSellHandler}
@@ -339,9 +397,7 @@ function AnimalTable() {
           </div>
         </div>
         <Footer />
-
       </div>
-
     </>
   );
 

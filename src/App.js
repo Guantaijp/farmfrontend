@@ -18,6 +18,26 @@ function App() {
   const [cost, setCost] = useState([]);
   const [sell, setSell] = useState([]);
   const [price, setPrice] = useState([]);
+  const [admins, setAdmins] = useState([]);
+
+  // Get admins
+  useEffect(() => {
+    fetch('http://localhost:3000/admins')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch admins');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setAdmins(data);
+
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error state or display an error message
+      });
+  }, []);
 
   // fetching the cow/animal data
   useEffect(() => {
@@ -65,10 +85,6 @@ function App() {
   }, []);
 
 
-
-
-
-
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
   const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
@@ -97,11 +113,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
-          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} setprice/>]} />
-          <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable />]} />
-          <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} />]} />
-          <Route path= "/dairytable" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<DairyTable cow={cow} setCow={setCow} milk={milk} setMilk={setMilk} cost={cost} setCost={setCost} sell={sell} setSell={setSell} price={price} setPrice={setPrice} />]} />
-          
+          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} admins={admins} setAdmins={setAdmins} />]} />
+          <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable admins={admins} setAdmins={setAdmins} cost={cost} setCost={setCost} sell={sell} setSell={setSell} />]} />
+          <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} admins={admins} setAdmins={setAdmins} />]} />
+          <Route path= "/dairytable" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<DairyTable cow={cow} setCow={setCow} milk={milk} setMilk={setMilk} cost={cost} setCost={setCost} sell={sell} setSell={setSell} price={price} setPrice={setPrice}admins={admins} setAdmins={setAdmins}  />]} />
+
         </Routes>
       </div>
     </AuthProvider>

@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
 import moment from "moment";
 
-function DairyTable({ cow, }) {
+function DairyTable({ cow, admins, setAdmins }) {
 
     // filter a date that is greater than the current date
     const filterPassedTime = (time) => {
@@ -46,8 +46,6 @@ function DairyTable({ cow, }) {
         const dateWithoutTime = moment(selectedDate).startOf('day')
         const formattedDate = dateWithoutTime.format('YYYY-MM-DD')  
 
-        console.log(formattedDate)
-
         e.preventDefault();
         const milk = {
             cow_id: selectedCowId,
@@ -67,7 +65,8 @@ function DairyTable({ cow, }) {
                 }
                 return res.json();
             })
-            .then((data) => {
+            .then((data) => { 
+               
                 if (data.error) {
                     Swal.fire({
                         icon: 'error',
@@ -76,12 +75,15 @@ function DairyTable({ cow, }) {
                     });
                 }
                 else if (data.message) {
+                   
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
                         text: data.message,
                     });
+            
                 }
+                window.location.reload();
                 setKg("");
                 setSelectedDate(new Date());
                 setSelectedCowId("");
@@ -93,40 +95,44 @@ function DairyTable({ cow, }) {
             }
             );
     }
-    
 
 
+    // get the milk data of the current day for the current admin
+    const [milk, setMilk] = useState([]);
 
-    const [admins, setAdmins] = useState([]);
-
-    // Get admins
     useEffect(() => {
-        fetch('http://localhost:3000/admins')
+        fetch('http://localhost:3000/milks')
             .then((res) => {
                 if (!res.ok) {
-                    throw new Error('Failed to fetch admins');
+                    throw new Error('Failed to fetch milk');
                 }
                 return res.json();
             })
             .then((data) => {
-                setAdmins(data);
-                const user = JSON.parse(sessionStorage.getItem('user'));
-                const admin = data.find((admin) => admin.id === user.id);
-                if (admin) {
-                    // setName(admin.name);
-                    // setEmail(admin.email);
-                    // setPhone(admin.phone);
-                }
+                setMilk(data);
             })
             .catch((error) => {
                 console.error(error);
                 // Handle the error state or display an error message
             });
     }, []);
+    
+
     const user = JSON.parse(sessionStorage.getItem('user'));
     const admin = admins.find((admin) => admin.id === user.id) || {};
+    const ownedCows = cow.filter((cow) => cow.admin_id === admin.id);   
+    
+// Ensure milk is defined and initialized as an empty array if it's undefined
+const milkData = milk || [];
 
-    const ownedCows = cow.filter((cow) => cow.admin_id === admin.id);
+// Get the milk data of the current day for the current admin
+const todayMilk = milkData.filter((milk) => milk.date === moment(new Date()).format('YYYY-MM-DD') && ownedCows.find((cow) => cow.id === milk.cow_id));
+
+console.log(todayMilk);
+
+
+
+
 
     return (
         <div style={{ backgroundColor: "#F5F5F5" }} className="flex flex-col ml-0 lg:ml-80 ">
@@ -138,33 +144,37 @@ function DairyTable({ cow, }) {
                             <tr>
                                 <th className="px-4 py-2">Cow Image</th>
                                 <th className="px-4 py-2">Cow Name</th>
+                                <th className="px-4 py-2">Cow Health</th>
                                 <th className="px-4 py-2">Cow Breed</th>
                                 <th className="px-4 py-2">Milk Kgs</th>
                                 <th className="px-4 py-2">Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="border px-4 py-2">1</td>
-                                <td className="border px-4 py-2">2</td>
-                                <td className="border px-4 py-2">3</td>
-                                <td className="border px-4 py-2">4</td>
-                                <td className="border px-4 py-2">5</td>
-                            </tr>
-                            <tr className="bg-gray-100">
-                                <td className="border px-4 py-2">6</td>
-                                <td className="border px-4 py-2">7</td>
-                                <td className="border px-4 py-2">8</td>
-                                <td className="border px-4 py-2">9</td>
-                                <td className="border px-4 py-2">10</td>
-                            </tr>
-                            <tr>
-                                <td className="border px-4 py-2">11</td>
-                                <td className="border px-4 py-2">12</td>
-                                <td className="border px-4 py-2">13</td>
-                                <td className="border px-4 py-2">14</td>
-                                <td className="border px-4 py-2">15</td>
-                            </tr>
+                            {todayMilk.map((milk) => (
+                                <tr key={milk.id}>
+                                    <td className="border px-4 py-2">
+                                        <img
+                                            src={ownedCows.find((cow) => cow.id === milk.cow_id).image_url}
+                                            alt="cow"
+                                            className="w-10 h-10 rounded-full"
+                                        />
+                                    </td>
+                                    <td className="border px-4 py-2">
+                                        {ownedCows.find((cow) => cow.id === milk.cow_id).name}
+                                    </td>
+                                    <td className="border px-4 py-2">
+                                        {ownedCows.find((cow) => cow.id === milk.cow_id).health}
+                                    </td>
+                                    <td className="border px-4 py-2">
+                                        {ownedCows.find((cow) => cow.id === milk.cow_id).breed}
+                                    </td>
+                                    <td className="border px-4 py-2">{milk.amount}</td>
+                                    <td className="border px-4 py-2">{milk.date}</td>
+                                </tr>
+                            ))}
+
+                         
                         </tbody>
                     </table>
 

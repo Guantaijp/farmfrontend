@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import Profile from './images/images.jpeg';
 import { FaBars } from 'react-icons/fa';
 import "../App.css"
-import {FaAngleRight, FaAngleLeft} from "react-icons/fa";
-import { useAdminData } from './AdminData' 
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { useAdminData } from './AdminData'
 import "../App.css"
 
 
@@ -19,7 +19,7 @@ import "../App.css"
 
 function SideBar({ visible, show }) {
 
-    const { admin } = useAdminData();
+  const { admin } = useAdminData();
 
   const navigate = useNavigate();
   const triggerLogout = () => {
@@ -34,77 +34,77 @@ function SideBar({ visible, show }) {
 
   return (
     <>
-    <div className="lg:fixed">
-      <div className="mobile-nav">
-        <button
-          className="mobile-nav-btn"
-          onClick={() => !show(!visible)}
-        >
-          <FaBars size={24} />
-        </button>
-      </div>
-      <nav className={visible ? 'navbar' : ''}>
-        <div className="flex flex-col m-6 justify-start">
-          <div className="flex flex-row">
-            {!admin?.image_url ? (
-              <img
-                className="rounded-full h-24 w-24 mr-3"
-                src={Profile}
-                alt="profile"
-              />
-            ) : (
-              <img
-                src={admin?.image_url}
-                alt="profile"
-                className="rounded-full h-24 w-24 mr-3"
-              />
-            )}
-            <div className="flex flex-col justify-center">
-              <h1 className="text-2xl font-bold">{admin?.name}</h1>
-              <p className="text-start">Welcome Back!</p>
+      <div className="lg:fixed">
+        <div className="mobile-nav">
+          <button
+            className="mobile-nav-btn"
+            onClick={() => !show(!visible)}
+          >
+            <FaBars size={24} />
+          </button>
+        </div>
+        <nav className={visible ? 'navbar' : ''}>
+          <div className="flex flex-col m-6 justify-start">
+            <div className="flex flex-row">
+              {!admin?.image_url ? (
+                <img
+                  className="rounded-full h-24 w-24 mr-3"
+                  src={Profile}
+                  alt="profile"
+                />
+              ) : (
+                <img
+                  src={admin?.image_url}
+                  alt="profile"
+                  className="rounded-full h-24 w-24 mr-3"
+                />
+              )}
+              <div className="flex flex-col justify-center">
+                <h1 className="text-2xl font-bold">{admin?.name}</h1>
+                <p className="text-start">Welcome Back!</p>
+              </div>
             </div>
-          </div>
-          <hr className="border-gray-400 mt-5 mb-5" />
-          <div className="flex flex-col m-2">
-            <Link to="/" className="flex flex-row mb-8">
-              <BiHomeAlt2 className="text-3xl text-white hover:text-gray-400 mr-2" />
-              <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                Dashboard
-              </h1>
-            </Link>
-            <Link to="/dairytable" className="flex flex-row mb-8">
-              <GiCow className="text-3xl text-white hover:text-gray-400 mr-2" />
-              <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                Dairy Farming
-              </h1>
-            </Link>
-            <Link to="/input" className="flex flex-row mb-8">
-              <SiGitea className="text-3xl text-white hover:text-gray-400 mr-2" />
-              <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                Tea Farming
-              </h1>
-            </Link>
-            <div className="flex flex-col justify-end fixed bottom-0 left-0 right-0 p-5">
-              <Link to="/account" className="flex flex-row mb-5">
-                <CgProfile className="text-3xl text-white hover:text-gray-400 mr-2" />
+            <hr className="border-gray-400 mt-5 mb-5" />
+            <div className="flex flex-col m-2">
+              <Link to="/" className="flex flex-row mb-8">
+                <BiHomeAlt2 className="text-3xl text-white hover:text-gray-400 mr-2" />
                 <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                  My Account
+                  Dashboard
                 </h1>
               </Link>
-              <button
-                onClick={triggerLogout}
-                className="text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400"
-              >
-                <AiOutlineLogout className="text-3xl text-white hover:text-gray-400 mr-2" />
-                Logout
-              </button>
+              <Link to="/dairytable" className="flex flex-row mb-8">
+                <GiCow className="text-3xl text-white hover:text-gray-400 mr-2" />
+                <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
+                  Dairy Farming
+                </h1>
+              </Link>
+              <Link to="/input" className="flex flex-row mb-8">
+                <SiGitea className="text-3xl text-white hover:text-gray-400 mr-2" />
+                <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
+                  Tea Farming
+                </h1>
+              </Link>
+              {/* <div className=" fixed bottom-0 left-0 right-0 p-5"> */}
+                <Link to="/account" className="flex flex-row mb-5">
+                  <CgProfile className="text-3xl text-white hover:text-gray-400 mr-2" />
+                  <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
+                    My Account
+                  </h1>
+                </Link>
+                <button
+                  onClick={triggerLogout}
+                  className="text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400"
+                >
+                  <AiOutlineLogout className="text-3xl text-white hover:text-gray-400 mr-2" />
+                  Logout
+                </button>
+              {/* </div> */}
             </div>
           </div>
-        </div>
-      </nav>
-    </div>
-  </>
-  
+        </nav>
+      </div>
+    </>
+
   );
 }
 

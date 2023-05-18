@@ -20,7 +20,7 @@ function Footer() {
         const admin = data.find((admin) => admin.id === user.id);
         if (admin) {
           setName(admin.name);
-         
+
         }
       })
       .catch((error) => {
@@ -35,16 +35,16 @@ function Footer() {
   return (
 
     <div
-    style={{
+      style={{
         bottom: '0',
         left: '0',
         right: '0',
         padding: '0.75rem',
         display: 'flex',
         flexDirection: 'column',
-        
-        }}
-     className="footer-container">
+
+      }}
+      className="footer-container">
       <hr className="border-gray-400 ml-6" />
       <div className="text-center text-black font-semibold  text-sm">
         © {new Date().getFullYear()} {admin.name} Farm | All Rights Reserved.

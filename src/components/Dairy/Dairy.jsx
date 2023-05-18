@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import CustomPopup from '../CustomPopup'
 
 
-function Dairy({ cow, setCow }) {
+function Dairy({ cow, setCow, admins, setAdmins }) {
 
   const [name, setName] = useState('')
   const [health, setHealth] = useState('')
@@ -43,25 +43,25 @@ function Dairy({ cow, setCow }) {
   };
 
 
-  const [admins, setAdmins] = useState([]);
-  // Get admins
-  useEffect(() => {
-    fetch('http://localhost:3000/admins')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Failed to fetch admins');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setAdmins(data);
+  // const [admins, setAdmins] = useState([]);
+  // // Get admins
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/admins')
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error('Failed to fetch admins');
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setAdmins(data);
 
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error state or display an error message
-      });
-  }, []);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       // Handle the error state or display an error message
+  //     });
+  // }, []);
 
 
   const user = JSON.parse(sessionStorage.getItem('user'));
@@ -254,13 +254,19 @@ function Dairy({ cow, setCow }) {
             <div className="flex flex-col sm:flex-row gap-5">
               <div className="mb-5 sm:w-1/2">
                 <label htmlFor="" className="block mb-2 font-medium text-gray-600">Cow Health</label>
-                <select className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
+                <select
+                  className="border-2 rounded-md border-gray-300 py-2 px-3 w-full focus:outline-none focus:border-bg-black"
                   value={health}
                   onChange={handleHealthChange}
-                  type="text" id="Cow Health" name="Cow Health" placeholder="Cow Health" required >
+                  id="CowHealth"
+                  name="CowHealth"
+                  required
+                >
+                  <option value="">Select Cow Health</option>
                   <option value="Healthy">Healthy</option>
                   <option value="Sick">Sick</option>
                 </select>
+
 
               </div>
               <div className="mb-5 sm:w-1/2">
