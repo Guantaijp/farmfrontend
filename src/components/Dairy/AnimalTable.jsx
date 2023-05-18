@@ -56,14 +56,14 @@ function AnimalTable({ admins, setAdmins }) {
   const [cost, setCost] = useState([]);
 
 
-    // fetching the cost data
-    useEffect(() => {
-      fetch('http://localhost:3000/costs')
-        .then((res) => res.json())
-        .then((data) => {
-          setCost(data);
-        });
-    }, []);
+  // fetching the cost data
+  useEffect(() => {
+    fetch('http://localhost:3000/costs')
+      .then((res) => res.json())
+      .then((data) => {
+        setCost(data);
+      });
+  }, []);
 
 
 
@@ -189,12 +189,151 @@ function AnimalTable({ admins, setAdmins }) {
   //give me the array of sell that has the admin id of the current admin
   const adminSell = sell.filter((sell) => sell.admin_id === admin.id);
   //just show the last 5 cost
-  const lastFiveCost = adminCost.slice(Math.max(adminCost.length - 5, 0));
+  const lastFiveCost = adminCost.slice(Math.max(adminCost.length - 3, 0));
   //just show the last 5 sell
-  const lastFiveSell = adminSell.slice(Math.max(adminSell.length - 5, 0));
+  const lastFiveSell = adminSell.slice(Math.max(adminSell.length - 3, 0));
+
+
+
+
+  //  const [monthlySell, setMonthlySell] = useState([]);
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/monthly_sell')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setMonthlySell(data.sell_array);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching monthly sell data:', error);
+  //     });
+  // }, []);
+
+  //  console.log(monthlySell);
+
+  // http://127.0.0.1:3000/admin_sell
+
+  const [adminSells, setAdminSells] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/admin_sell')
+      .then((res) => res.json())
+      .then((data) => {
+        setAdminSells(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching monthly sell data:', error);
+      });
+  }, []);
+
+
+
+  const [adminTotalSells, setAdminTotalSells] = useState({});
+
+  useEffect(() => {
+    fetch("http://localhost:3000/admin_sell")
+      .then((res) => res.json())
+      .then((data) => {
+        setAdminTotalSells(data);
+      });
+  }, []);
+
+
+  const adminId = user && user.id;
+
+  const monthlyAdminTotalSell = Object.entries(adminTotalSells.monthly_admin_totals || {});
+
+  const monthlyAdminTotalsForAdmin = monthlyAdminTotalSell.map(([month, adminTotals]) => {
+    return [month, adminTotals[adminId]];
+
+  });
+
+  const monthAdminTotals = {
+    January: [],
+    February: [],
+    March: [],
+    April: [],
+    May: [],
+    June: [],
+    July: [],
+    August: [],
+    September: [],
+    October: [],
+    November: [],
+    December: [],
+  };
+
+  monthlyAdminTotalsForAdmin.forEach(([month, adminTotals]) => {
+    if (monthAdminTotals.hasOwnProperty(month)) {
+      monthAdminTotals[month] = adminTotals;
+    }
+  });
+
+  const januaryAdminTotalsForAdmin = monthAdminTotals["January"];
+  const februaryAdminTotalsForAdmin = monthAdminTotals["February"];
+  const marchAdminTotalsForAdmin = monthAdminTotals["March"];
+  const aprilAdminTotalsForAdmin = monthAdminTotals["April"];
+  const mayAdminTotalsForAdmin = monthAdminTotals["May"];
+  const juneAdminTotalsForAdmin = monthAdminTotals["June"];
+  const julyAdminTotalsForAdmin = monthAdminTotals["July"];
+  const augustAdminTotalsForAdmin = monthAdminTotals["August"];
+  const septemberAdminTotalsForAdmin = monthAdminTotals["September"];
+  const octoberAdminTotalsForAdmin = monthAdminTotals["October"];
+  const novemberAdminTotalsForAdmin = monthAdminTotals["November"];
+  const decemberAdminTotalsForAdmin = monthAdminTotals["December"];
+
+
+  const [adminTotalCosts, setAdminTotalCosts] = useState({});
+  useEffect(() => {
+    fetch("http://localhost:3000/admin_cost")
+      .then((res) => res.json())  
+      .then((data) => {
+        setAdminTotalCosts(data);
+      });
+  }, []);
+
+  const monthlyAdminTotalCost = Object.entries(adminTotalCosts.monthly_admin_totals || {});
+
+  const monthlyAdminTotalsForAdminCost = monthlyAdminTotalCost.map(([month, adminTotals]) => {
+    return [month, adminTotals[adminId]];
+  });
+
+  const monthAdminTotalsCost = {
+    January: [],
+    February: [],
+    March: [],
+    April: [],
+    May: [],
+    June: [],
+    July: [],
+    August: [],
+    September: [],
+    October: [],
+    November: [],
+    December: [],
+  };
+
+  monthlyAdminTotalsForAdminCost.forEach(([month, adminTotals]) => {  
+    if (monthAdminTotalsCost.hasOwnProperty(month)) {
+      monthAdminTotalsCost[month] = adminTotals;
+    }
+  });
+
+  const januaryAdminTotalsForAdminCost = monthAdminTotalsCost["January"];
+  const februaryAdminTotalsForAdminCost = monthAdminTotalsCost["February"];
+  const marchAdminTotalsForAdminCost = monthAdminTotalsCost["March"];
+  const aprilAdminTotalsForAdminCost = monthAdminTotalsCost["April"];
+  const mayAdminTotalsForAdminCost = monthAdminTotalsCost["May"];
+  const juneAdminTotalsForAdminCost = monthAdminTotalsCost["June"];
+  const julyAdminTotalsForAdminCost = monthAdminTotalsCost["July"];
+  const augustAdminTotalsForAdminCost = monthAdminTotalsCost["August"];
+  const septemberAdminTotalsForAdminCost = monthAdminTotalsCost["September"];
+  const octoberAdminTotalsForAdminCost = monthAdminTotalsCost["October"];
+  const novemberAdminTotalsForAdminCost = monthAdminTotalsCost["November"];
+  const decemberAdminTotalsForAdminCost = monthAdminTotalsCost["December"];
+
+
 
   
-
 
 
   return (
@@ -206,36 +345,40 @@ function AnimalTable({ admins, setAdmins }) {
             <table className="table-auto">
               <thead>
                 <tr>
+                  <th className="px-4 py-2">Month</th>
                   <th className="px-4 py-2">Total milk sold(kgs)</th>
                   <th className="px-4 py-2">Milk Total price(ksh)</th>
-                  <th className="px-4 py-2">other incomes</th>
+                  <th className="px-4 py-2">Total Sells</th>
                   <th className="px-4 py-2">cost used</th>
                   <th className="px-4 py-2">profit/loss</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">3</td>
-                  <td className="border px-4 py-2">4</td>
-                  <td className="border px-4 py-2">5</td>
-                </tr>
-                <tr className="bg-gray-100">
-                  <td className="border px-4 py-2">6</td>
-                  <td className="border px-4 py-2">7</td>
-                  <td className="border px-4 py-2">8</td>
-                  <td className="border px-4 py-2">9</td>
-                  <td className="border px-4 py-2">10</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">11</td>
-                  <td className="border px-4 py-2">12</td>
-                  <td className="border px-4 py-2">13</td>
-                  <td className="border px-4 py-2">14</td>
-                  <td className="border px-4 py-2">15</td>
-                </tr>
+                {[
+                  { month: "January", adminTotals: januaryAdminTotalsForAdmin, adminTotalsCost: januaryAdminTotalsForAdminCost },
+                  { month: "February", adminTotals: februaryAdminTotalsForAdmin, adminTotalsCost: februaryAdminTotalsForAdminCost },
+                  { month: "March", adminTotals: marchAdminTotalsForAdmin , adminTotalsCost: marchAdminTotalsForAdminCost},
+                  { month: "April", adminTotals: aprilAdminTotalsForAdmin , adminTotalsCost: aprilAdminTotalsForAdminCost},
+                  { month: "May", adminTotals: mayAdminTotalsForAdmin , adminTotalsCost: mayAdminTotalsForAdminCost}, 
+                  { month: "June", adminTotals: juneAdminTotalsForAdmin , adminTotalsCost: juneAdminTotalsForAdminCost},
+                  { month: "July", adminTotals: julyAdminTotalsForAdmin , adminTotalsCost: julyAdminTotalsForAdminCost},
+                  { month: "August", adminTotals: augustAdminTotalsForAdmin , adminTotalsCost: augustAdminTotalsForAdminCost},  
+                  { month: "September", adminTotals: septemberAdminTotalsForAdmin , adminTotalsCost: septemberAdminTotalsForAdminCost},
+                  { month: "October", adminTotals: octoberAdminTotalsForAdmin , adminTotalsCost: octoberAdminTotalsForAdminCost},
+                  { month: "November", adminTotals: novemberAdminTotalsForAdmin , adminTotalsCost: novemberAdminTotalsForAdminCost},
+                  { month: "December", adminTotals: decemberAdminTotalsForAdmin , adminTotalsCost: decemberAdminTotalsForAdminCost},
+                ].map(({ month, adminTotals,adminTotalsCost }) => (
+                  <tr key={month}>
+                    <td className="border px-4 py-2">{month}</td>
+                    <td className="border px-4 py-2">100</td>
+                    <td className="border px-4 py-2">10000</td>
+                    <td className="border px-4 py-2">{adminTotals}</td>
+                    <td className="border px-4 py-2">{adminTotalsCost}</td>
+                    <td className="border px-4 py-2">1000</td>
+                  </tr>
+                ))}
               </tbody>
+
             </table>
 
           </form>

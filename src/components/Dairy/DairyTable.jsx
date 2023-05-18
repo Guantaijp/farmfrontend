@@ -128,7 +128,7 @@ const milkData = milk || [];
 // Get the milk data of the current day for the current admin
 const todayMilk = milkData.filter((milk) => milk.date === moment(new Date()).format('YYYY-MM-DD') && ownedCows.find((cow) => cow.id === milk.cow_id));
 
-console.log(todayMilk);
+// console.log(todayMilk);
 
 
 

@@ -69,6 +69,29 @@ function Dairy({ cow, setCow, admins, setAdmins }) {
   const admin = admins.find((admin) => admin.id === user.id) || {};
   const ownedCows = cow.filter((cow) => cow.admin_id === admin.id);
 
+  // const [monthlySell, setMonthlySell] = useState([]);
+
+
+
+  //   // fetching the monthly sell data
+  //   useEffect(() => {
+  //     fetch('http://localhost:3000/monthly_sell')
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setMonthlySell(data);
+  //       });
+  //   }, []);
+  
+  //   console.log(monthlySell);
+
+  //   //get the monthly sell data for the current admin 
+  //   const adminMonthlySell = monthlySell.filter((sell) => sell.admin_id === admin.id);
+  //   console.log(adminMonthlySell);
+
+    
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault()

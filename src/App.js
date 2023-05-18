@@ -19,6 +19,7 @@ function App() {
   const [sell, setSell] = useState([]);
   const [price, setPrice] = useState([]);
   const [admins, setAdmins] = useState([]);
+  // const [monthlySell, setMonthlySell] = useState([]);
 
   // Get admins
   useEffect(() => {
@@ -84,6 +85,19 @@ function App() {
       });
   }, []);
 
+//   // fetching the monthly sell data
+//   useEffect(() => {
+//     fetch('http://localhost:3000/monthly_sell')
+//       .then((res) => res.json())
+//       .then((data) => {
+//         setMonthlySell(data);
+//       });
+//   }, []);
+
+//   console.log(monthlySell);
+// // 
+
+
 
   const isLoggedIn = sessionStorage.getItem('jwtToken') ? true : false;
   const navigate = useNavigate();
@@ -112,7 +126,7 @@ function App() {
         <Routes className="">
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard /> ]} />
+          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard  admins = {admins}/> ]} />
           <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} admins={admins} setAdmins={setAdmins} />]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable admins={admins} setAdmins={setAdmins} cost={cost} setCost={setCost} sell={sell} setSell={setSell} />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} admins={admins} setAdmins={setAdmins} />]} />
