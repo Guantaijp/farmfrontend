@@ -51,6 +51,7 @@ function DairyTable({ cow, admins, setAdmins }) {
             cow_id: selectedCowId,
             amount: kg,
             date: formattedDate,
+            admin_id: user.id
         };
         fetch('http://localhost:3000/milk', {
             method: 'POST',
