@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import Swal from 'sweetalert2';
 import moment from "moment";
+import { GiConsoleController } from 'react-icons/gi';
 
 function AnimalTable({ admins, setAdmins }) {
   const filterPassedTime = (time) => {
@@ -312,6 +313,55 @@ function AnimalTable({ admins, setAdmins }) {
     const decemberAdminTotalsForAdminMilk = monthAdminTotalsMilk["December"];
 
 
+    // GET the total milk sold by the admin
+    const [totalAdminsPrice, setTotalAdminsPrice] = useState([]);
+
+    useEffect(() => {
+      fetch("http://127.0.0.1:3000/last")
+        .then((res) => res.json())
+        .then((data) => {
+          setTotalAdminsPrice(data);
+        });
+    }, []);
+    // console.log(totalAdminsPrice);
+    const monthlyAdminTotalPrice = Object.entries(totalAdminsPrice.monthly_admin_totals || {});
+    const monthlyAdminTotalsForAdminPrice = monthlyAdminTotalPrice.map(([month, adminTotals]) => {
+      return [month, adminTotals[adminId]]; 
+    });
+   
+    const monthAdminTotalsPrice = {
+      January: [],
+      February: [],
+      March: [],
+      April: [],
+      May: [],
+      June: [],
+      July: [],
+      August: [],
+      September: [],
+      October: [],
+      November: [],
+      December: [],
+    };
+    monthlyAdminTotalsForAdminPrice.forEach(([month, adminTotals]) => {
+      if (monthAdminTotalsPrice.hasOwnProperty(month)) {
+        monthAdminTotalsPrice[month] = adminTotals;
+      }
+    });
+
+    const januaryAdminTotalsForAdminPrice = monthAdminTotalsPrice["January"];
+    const februaryAdminTotalsForAdminPrice = monthAdminTotalsPrice["February"];
+    const marchAdminTotalsForAdminPrice = monthAdminTotalsPrice["March"];
+    const aprilAdminTotalsForAdminPrice = monthAdminTotalsPrice["April"];
+    const mayAdminTotalsForAdminPrice = monthAdminTotalsPrice["May"];
+    const juneAdminTotalsForAdminPrice = monthAdminTotalsPrice["June"];
+    const julyAdminTotalsForAdminPrice = monthAdminTotalsPrice["July"];
+    const augustAdminTotalsForAdminPrice = monthAdminTotalsPrice["August"];
+    const septemberAdminTotalsForAdminPrice = monthAdminTotalsPrice["September"];
+    const octoberAdminTotalsForAdminPrice = monthAdminTotalsPrice["October"];
+    const novemberAdminTotalsForAdminPrice = monthAdminTotalsPrice["November"];
+    const decemberAdminTotalsForAdminPrice = monthAdminTotalsPrice["December"];
+
   return (
     <>
       <div style={{ backgroundColor: "#F5F5F5" }} className="flex flex-col ml-0 lg:ml-80 ">
@@ -331,23 +381,23 @@ function AnimalTable({ admins, setAdmins }) {
               </thead>
               <tbody>
                 {[
-                  { month: "January", adminTotals: januaryAdminTotalsForAdmin, adminTotalsCost: januaryAdminTotalsForAdminCost , adminTotalsMilk: januaryAdminTotalsForAdminMilk},
-                  { month: "February", adminTotals: februaryAdminTotalsForAdmin, adminTotalsCost: februaryAdminTotalsForAdminCost, adminTotalsMilk: februaryAdminTotalsForAdminMilk},
-                  { month: "March", adminTotals: marchAdminTotalsForAdmin , adminTotalsCost: marchAdminTotalsForAdminCost, adminTotalsMilk: marchAdminTotalsForAdminMilk},
-                  { month: "April", adminTotals: aprilAdminTotalsForAdmin , adminTotalsCost: aprilAdminTotalsForAdminCost, adminTotalsMilk: aprilAdminTotalsForAdminMilk},
-                  { month: "May", adminTotals: mayAdminTotalsForAdmin , adminTotalsCost: mayAdminTotalsForAdminCost, adminTotalsMilk: mayAdminTotalsForAdminMilk},
-                  { month: "June", adminTotals: juneAdminTotalsForAdmin , adminTotalsCost: juneAdminTotalsForAdminCost, adminTotalsMilk: juneAdminTotalsForAdminMilk},
-                  { month: "July", adminTotals: julyAdminTotalsForAdmin , adminTotalsCost: julyAdminTotalsForAdminCost, adminTotalsMilk: julyAdminTotalsForAdminMilk},
-                  { month: "August", adminTotals: augustAdminTotalsForAdmin , adminTotalsCost: augustAdminTotalsForAdminCost, adminTotalsMilk: augustAdminTotalsForAdminMilk},
-                  { month: "September", adminTotals: septemberAdminTotalsForAdmin , adminTotalsCost: septemberAdminTotalsForAdminCost, adminTotalsMilk: septemberAdminTotalsForAdminMilk},
-                  { month: "October", adminTotals: octoberAdminTotalsForAdmin , adminTotalsCost: octoberAdminTotalsForAdminCost, adminTotalsMilk: octoberAdminTotalsForAdminMilk},
-                  { month: "November", adminTotals: novemberAdminTotalsForAdmin , adminTotalsCost: novemberAdminTotalsForAdminCost, adminTotalsMilk: novemberAdminTotalsForAdminMilk},
-                  { month: "December", adminTotals: decemberAdminTotalsForAdmin , adminTotalsCost: decemberAdminTotalsForAdminCost, adminTotalsMilk: decemberAdminTotalsForAdminMilk},
-                ].map(({ month, adminTotals,adminTotalsCost, adminTotalsMilk }) => (
+                  { month: "January", adminTotals: januaryAdminTotalsForAdmin, adminTotalsCost: januaryAdminTotalsForAdminCost , adminTotalsMilk: januaryAdminTotalsForAdminMilk, adminTotalsPrice: januaryAdminTotalsForAdminPrice},
+                  { month: "February", adminTotals: februaryAdminTotalsForAdmin, adminTotalsCost: februaryAdminTotalsForAdminCost, adminTotalsMilk: februaryAdminTotalsForAdminMilk, adminTotalsPrice: februaryAdminTotalsForAdminPrice},
+                  { month: "March", adminTotals: marchAdminTotalsForAdmin , adminTotalsCost: marchAdminTotalsForAdminCost, adminTotalsMilk: marchAdminTotalsForAdminMilk, adminTotalsPrice: marchAdminTotalsForAdminPrice},
+                  { month: "April", adminTotals: aprilAdminTotalsForAdmin , adminTotalsCost: aprilAdminTotalsForAdminCost, adminTotalsMilk: aprilAdminTotalsForAdminMilk, adminTotalsPrice: aprilAdminTotalsForAdminPrice},
+                  { month: "May", adminTotals: mayAdminTotalsForAdmin , adminTotalsCost: mayAdminTotalsForAdminCost, adminTotalsMilk: mayAdminTotalsForAdminMilk, adminTotalsPrice: mayAdminTotalsForAdminPrice},
+                  { month: "June", adminTotals: juneAdminTotalsForAdmin , adminTotalsCost: juneAdminTotalsForAdminCost, adminTotalsMilk: juneAdminTotalsForAdminMilk, adminTotalsPrice: juneAdminTotalsForAdminPrice},
+                  { month: "July", adminTotals: julyAdminTotalsForAdmin , adminTotalsCost: julyAdminTotalsForAdminCost, adminTotalsMilk: julyAdminTotalsForAdminMilk, adminTotalsPrice: julyAdminTotalsForAdminPrice},
+                  { month: "August", adminTotals: augustAdminTotalsForAdmin , adminTotalsCost: augustAdminTotalsForAdminCost, adminTotalsMilk: augustAdminTotalsForAdminMilk, adminTotalsPrice: augustAdminTotalsForAdminPrice},
+                  { month: "September", adminTotals: septemberAdminTotalsForAdmin , adminTotalsCost: septemberAdminTotalsForAdminCost, adminTotalsMilk: septemberAdminTotalsForAdminMilk, adminTotalsPrice: septemberAdminTotalsForAdminPrice},
+                  { month: "October", adminTotals: octoberAdminTotalsForAdmin , adminTotalsCost: octoberAdminTotalsForAdminCost, adminTotalsMilk: octoberAdminTotalsForAdminMilk, adminTotalsPrice: octoberAdminTotalsForAdminPrice},
+                  { month: "November", adminTotals: novemberAdminTotalsForAdmin , adminTotalsCost: novemberAdminTotalsForAdminCost, adminTotalsMilk: novemberAdminTotalsForAdminMilk, adminTotalsPrice: novemberAdminTotalsForAdminPrice},
+                  { month: "December", adminTotals: decemberAdminTotalsForAdmin , adminTotalsCost: decemberAdminTotalsForAdminCost, adminTotalsMilk: decemberAdminTotalsForAdminMilk, adminTotalsPrice: decemberAdminTotalsForAdminPrice},
+                ].map(({ month, adminTotals,adminTotalsCost, adminTotalsMilk , adminTotalsPrice}) => (
                   <tr key={month}>
                     <td className="border px-4 py-2">{month}</td>
                     <td className="border px-4 py-2">{adminTotalsMilk}</td>
-                    <td className="border px-4 py-2">10000</td>
+                    <td className="border px-4 py-2">{adminTotalsPrice}</td>
                     <td className="border px-4 py-2">{adminTotals}</td>
                     <td className="border px-4 py-2">{adminTotalsCost}</td>
                     <td className="border px-4 py-2">1000</td>
