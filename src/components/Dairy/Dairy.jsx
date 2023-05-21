@@ -43,25 +43,7 @@ function Dairy({ cow, setCow, admins, setAdmins }) {
   };
 
 
-  // const [admins, setAdmins] = useState([]);
-  // // Get admins
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/admins')
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error('Failed to fetch admins');
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setAdmins(data);
 
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       // Handle the error state or display an error message
-  //     });
-  // }, []);
 
 
   const user = JSON.parse(sessionStorage.getItem('user'));
@@ -69,29 +51,7 @@ function Dairy({ cow, setCow, admins, setAdmins }) {
   const admin = admins.find((admin) => admin.id === user.id) || {};
   const ownedCows = cow.filter((cow) => cow.admin_id === admin.id);
 
-  // const [monthlySell, setMonthlySell] = useState([]);
-
-
-
-  //   // fetching the monthly sell data
-  //   useEffect(() => {
-  //     fetch('http://localhost:3000/monthly_sell')
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setMonthlySell(data);
-  //       });
-  //   }, []);
-  
-  //   console.log(monthlySell);
-
-  //   //get the monthly sell data for the current admin 
-  //   const adminMonthlySell = monthlySell.filter((sell) => sell.admin_id === admin.id);
-  //   console.log(adminMonthlySell);
-
-    
-
-
-
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault()

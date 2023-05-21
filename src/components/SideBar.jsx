@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -18,6 +18,13 @@ import "../App.css"
 
 
 function SideBar({ visible, show }) {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
 
   const { admin } = useAdminData();
 
@@ -72,32 +79,63 @@ function SideBar({ visible, show }) {
                   Dashboard
                 </h1>
               </Link>
-              <Link to="/dairytable" className="flex flex-row mb-8">
+              <div className="relative">
+                <div className="flex flex-row mb-8" onClick={toggleDropdown}>
+                  <GiCow className="text-3xl text-white hover:text-gray-400 mr-2 cursor-pointer" />
+                  <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400 cursor-pointer">
+                    Dairy Farming
+                  </h1>
+                  <span className="ml-2">&#9660;</span>
+                </div>
+                {isOpen && (
+                  <div className="absolute left-0 mt-2 bg-white text-gray-800 rounded shadow-md">
+                    <ul className="py-2 px-3">
+                      <li>
+                        <Link to="/dairytable" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
+                          DAIRY INPUT
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/input" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
+                          DAIRY TABLE 
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/dairy" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
+                          COW INPUT
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+              {/* <Link to="/dairytable" className="flex flex-row mb-8">
                 <GiCow className="text-3xl text-white hover:text-gray-400 mr-2" />
                 <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
                   Dairy Farming
                 </h1>
-              </Link>
-              <Link to="/input" className="flex flex-row mb-8">
+              </Link> */}
+              <Link to="" className="flex flex-row mb-8">
                 <SiGitea className="text-3xl text-white hover:text-gray-400 mr-2" />
                 <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
                   Tea Farming
                 </h1>
               </Link>
+
               {/* <div className=" fixed bottom-0 left-0 right-0 p-5"> */}
-                <Link to="/account" className="flex flex-row mb-5">
-                  <CgProfile className="text-3xl text-white hover:text-gray-400 mr-2" />
-                  <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                    My Account
-                  </h1>
-                </Link>
-                <button
-                  onClick={triggerLogout}
-                  className="text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400"
-                >
-                  <AiOutlineLogout className="text-3xl text-white hover:text-gray-400 mr-2" />
-                  Logout
-                </button>
+              <Link to="/account" className="flex flex-row mb-5">
+                <CgProfile className="text-3xl text-white hover:text-gray-400 mr-2" />
+                <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
+                  My Account
+                </h1>
+              </Link>
+              <button
+                onClick={triggerLogout}
+                className="text-start text-2xl flex flex-row mb-5 font-bold text-white hover:text-gray-400"
+              >
+                <AiOutlineLogout className="text-3xl text-white hover:text-gray-400 mr-2" />
+                Logout
+              </button>
               {/* </div> */}
             </div>
           </div>

@@ -22,7 +22,7 @@ function DairyTable({ cow, admins, setAdmins }) {
             return true;
         }
 
-        return currentDate.getTime() <= selectedDate.getTime();
+        return currentDate 
     };
 
     const [kg, setKg] = useState("");

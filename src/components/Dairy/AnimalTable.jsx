@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import moment from "moment";
 import { GiConsoleController } from 'react-icons/gi';
 
-function AnimalTable({ admins, setAdmins }) {
+function AnimalTable({ admins, monthlyAdminTotalsForAdminPrice }) {
   const filterPassedTime = (time) => {
     const currentDate = new Date();
     const selectedDate = new Date(time);
@@ -172,24 +172,7 @@ function AnimalTable({ admins, setAdmins }) {
       });
   }, []);
 
-  const [profitLoss, setProfitLoss] = useState({});
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:3000/profit_loss")
-      .then((res) => res.json())
-      .then((data) => {
-        setProfitLoss(data);
-      });
-  }, []);
-
-  const adminId = user.id;
-  const monthlyAdminTotalPrice = Object.entries(profitLoss.monthly_admin_totals || {});
-  const monthlyAdminTotalsForAdminPrice = monthlyAdminTotalPrice.map(([month, adminTotals]) => {
-    return [month, adminTotals[adminId]]; 
-  });
-  console.log (monthlyAdminTotalsForAdminPrice);
-
-  
 
   return (
     <>

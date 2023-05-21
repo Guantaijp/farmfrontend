@@ -85,17 +85,22 @@ function App() {
       });
   }, []);
 
-//   // fetching the monthly sell data
-//   useEffect(() => {
-//     fetch('http://localhost:3000/monthly_sell')
-//       .then((res) => res.json())
-//       .then((data) => {
-//         setMonthlySell(data);
-//       });
-//   }, []);
+  const [profitLoss, setProfitLoss] = useState({});
 
-//   console.log(monthlySell);
-// // 
+  useEffect(() => {
+    fetch("http://127.0.0.1:3000/profit_loss")
+      .then((res) => res.json())
+      .then((data) => {
+        setProfitLoss(data);
+      });
+  }, []);
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const admin = (user && admins.find((admin) => admin.id === user.id)) || {};
+  
+  const monthlyAdminTotalPrice = Object.entries(profitLoss.monthly_admin_totals || {});
+  const monthlyAdminTotalsForAdminPrice = monthlyAdminTotalPrice.map(([month, adminTotals]) => {
+    return [month, adminTotals[admin.id]];
+  });
 
 
 
@@ -126,9 +131,9 @@ function App() {
         <Routes className="">
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard  admins = {admins}/> ]} />
+          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard  admins = {admins} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice}/> ]} />
           <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} admins={admins} setAdmins={setAdmins} />]} />
-          <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable admins={admins} setAdmins={setAdmins} cost={cost} setCost={setCost} sell={sell} setSell={setSell} />]} />
+          <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable admins={admins} setAdmins={setAdmins} cost={cost} setCost={setCost} sell={sell} setSell={setSell} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice} />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} admins={admins} setAdmins={setAdmins} />]} />
           <Route path= "/dairytable" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<DairyTable cow={cow} setCow={setCow} milk={milk} setMilk={setMilk} cost={cost} setCost={setCost} sell={sell} setSell={setSell} price={price} setPrice={setPrice}admins={admins} setAdmins={setAdmins}  />]} />
 
