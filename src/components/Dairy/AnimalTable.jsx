@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import Swal from 'sweetalert2';
 import moment from "moment";
-import { GiConsoleController } from 'react-icons/gi';
 
 function AnimalTable({ admins, monthlyAdminTotalsForAdminPrice }) {
   const filterPassedTime = (time) => {
@@ -171,7 +170,6 @@ function AnimalTable({ admins, monthlyAdminTotalsForAdminPrice }) {
         console.error('Error fetching monthly sell data:', error);
       });
   }, []);
-
 
 
   return (

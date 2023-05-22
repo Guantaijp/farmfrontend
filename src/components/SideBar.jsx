@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import Profile from './images/images.jpeg';
 import { FaBars } from 'react-icons/fa';
 import "../App.css"
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { useAdminData } from './AdminData'
 import "../App.css"
 
