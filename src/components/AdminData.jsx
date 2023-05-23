@@ -107,7 +107,6 @@ export const useAdminData = () => {
           setImage, setName, setEmail, setPhone,
           handleNameChange, handleEmailChange, 
           handlePhoneChange, handleImageChange,
-          
           handleSubmit, updateImage, updateFields}
 
 }

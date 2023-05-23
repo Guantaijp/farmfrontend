@@ -9,6 +9,8 @@ import Login from './components/logins/Login';
 import Signup from './components/logins/Signup';
 import Dairy from './components/Dairy/Dairy';
 import DairyTable from './components/Dairy/DairyTable';
+import TeaInput from './components/Tea/TeaInput';
+import TeaTable from './components/Tea/TeaTable';
 
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
   const [sell, setSell] = useState([]);
   const [price, setPrice] = useState([]);
   const [admins, setAdmins] = useState([]);
-  // const [monthlySell, setMonthlySell] = useState([]);
+  const [tea , setTea] = useState([]);
+
+
 
   // Get admins
   useEffect(() => {
@@ -85,6 +89,15 @@ function App() {
       });
   }, []);
 
+  // fetching the tea data
+  useEffect(() => {
+    fetch('http://localhost:3000/tea')
+      .then((res) => res.json())
+      .then((data) => {
+        setTea(data);
+      });
+  }, []);
+
   const [profitLoss, setProfitLoss] = useState({});
 
   useEffect(() => {
@@ -94,6 +107,7 @@ function App() {
         setProfitLoss(data);
       });
   }, []);
+
   const user = JSON.parse(sessionStorage.getItem('user'));
   const admin = (user && admins.find((admin) => admin.id === user.id)) || {};
   
@@ -132,10 +146,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard  admins = {admins} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice}/> ]} />
-          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} admins={admins} setAdmins={setAdmins} />]} />
+          <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} admins={admins} setAdmins={setAdmins} tea={tea}/>]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable admins={admins} setAdmins={setAdmins} cost={cost} setCost={setCost} sell={sell} setSell={setSell} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice} />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} admins={admins} setAdmins={setAdmins} />]} />
           <Route path= "/dairytable" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<DairyTable cow={cow} setCow={setCow} milk={milk} setMilk={setMilk} cost={cost} setCost={setCost} sell={sell} setSell={setSell} price={price} setPrice={setPrice}admins={admins} setAdmins={setAdmins}  />]} />
+
+          <Route path= "/teainput" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<TeaInput admins={admins} setAdmins={setAdmins} tea={tea} setTea={setTea} />]} />
+          <Route path= "/teatable" element={[ <SideBar visible={ navVisible } show={ showNavbar } />,<TeaTable admins={admins} setAdmins={setAdmins} tea={tea} setTea={setTea} />]} />
 
         </Routes>
       </div>

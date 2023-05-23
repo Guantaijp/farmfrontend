@@ -19,9 +19,14 @@ import "../App.css"
 function SideBar({ visible, show }) {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isTeaOpen, setIsTeaOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleTeaDropdown = () => {
+    setIsTeaOpen(!isTeaOpen);
   };
 
 
@@ -79,7 +84,7 @@ function SideBar({ visible, show }) {
                 </h1>
               </Link>
               <div className="relative">
-                <div className="flex flex-row mb-8" onClick={toggleDropdown}>
+                <div className="flex flex-row" onClick={toggleDropdown}>
                   <GiCow className="text-3xl text-white hover:text-gray-400 mr-2 cursor-pointer" />
                   <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400 cursor-pointer">
                     Dairy Farming
@@ -87,7 +92,7 @@ function SideBar({ visible, show }) {
                   <span className="ml-2">&#9660;</span>
                 </div>
                 {isOpen && (
-                  <div className="absolute left-0 mt-2 bg-white text-gray-800 rounded shadow-md">
+                  <div className="absolute left-0 mb-8  bg-white text-gray-800 rounded shadow-md">
                     <ul className="py-2 px-3">
                       <li>
                         <Link to="/dairytable" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
@@ -96,7 +101,7 @@ function SideBar({ visible, show }) {
                       </li>
                       <li>
                         <Link to="/input" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
-                          DAIRY TABLE 
+                          DAIRY TABLE
                         </Link>
                       </li>
                       <li>
@@ -108,18 +113,32 @@ function SideBar({ visible, show }) {
                   </div>
                 )}
               </div>
-              {/* <Link to="/dairytable" className="flex flex-row mb-8">
-                <GiCow className="text-3xl text-white hover:text-gray-400 mr-2" />
-                <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                  Dairy Farming
-                </h1>
-              </Link> */}
-              <Link to="" className="flex flex-row mb-8">
+
+              <div className="relative">
+                <div className="flex flex-row" onClick={toggleTeaDropdown}>
                 <SiGitea className="text-3xl text-white hover:text-gray-400 mr-2" />
-                <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400">
-                  Tea Farming
-                </h1>
-              </Link>
+                  <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400 cursor-pointer">
+                    Tea Farming
+                  </h1>
+                  <span className="ml-2">&#9660;</span>
+                </div>
+                {isTeaOpen && (
+                  <div className="absolute left-0  mb-8  bg-white text-gray-800 rounded shadow-md">
+                    <ul className="py-2 px-3">
+                      <li>
+                        <Link to="/teatable" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
+                          TEA TABLE
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/teainput" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
+                          TEA INPUT
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
 
               {/* <div className=" fixed bottom-0 left-0 right-0 p-5"> */}
               <Link to="/account" className="flex flex-row mb-5">
