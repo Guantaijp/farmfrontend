@@ -7,7 +7,7 @@ function Footer() {
 
   // Get admins
   useEffect(() => {
-    fetch('http://localhost:3000/admins')
+    fetch('https://glacial-shelf-52388.herokuapp.com/admins')
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch admins');

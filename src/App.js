@@ -27,7 +27,7 @@ function App() {
 
   // Get admins
   useEffect(() => {
-    fetch('http://localhost:3000/admins')
+    fetch('https://glacial-shelf-52388.herokuapp.com/admins')
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch admins');
@@ -46,7 +46,7 @@ function App() {
 
   // fetching the cow/animal data
   useEffect(() => {
-    fetch('http://localhost:3000/cows')
+    fetch('https://glacial-shelf-52388.herokuapp.com/cows')
       .then((res) => res.json())
       .then((data) => {
         setCow(data);
@@ -55,7 +55,7 @@ function App() {
 
   // fetching the milk data
   useEffect(() => {
-    fetch('http://localhost:3000/milks')
+    fetch('https://glacial-shelf-52388.herokuapp.com/milks')
       .then((res) => res.json())
       .then((data) => {
         setMilk(data);
@@ -64,7 +64,7 @@ function App() {
 
   // fetching the cost data
   useEffect(() => {
-    fetch('http://localhost:3000/costs')
+    fetch('https://glacial-shelf-52388.herokuapp.com/costs')
       .then((res) => res.json())
       .then((data) => {
         setCost(data);
@@ -73,7 +73,7 @@ function App() {
 
   // fetching the sell data
   useEffect(() => {
-    fetch('http://localhost:3000/sells')
+    fetch('https://glacial-shelf-52388.herokuapp.com/sells')
       .then((res) => res.json())
       .then((data) => {
         setSell(data);
@@ -82,7 +82,7 @@ function App() {
 
   // fetching the price data
   useEffect(() => {
-    fetch('http://localhost:3000/prices')
+    fetch('https://glacial-shelf-52388.herokuapp.com/prices')
       .then((res) => res.json())
       .then((data) => {
         setPrice(data);
@@ -91,7 +91,7 @@ function App() {
 
   // fetching the tea data
   useEffect(() => {
-    fetch('http://localhost:3000/tea')
+    fetch('https://glacial-shelf-52388.herokuapp.com/tea')
       .then((res) => res.json())
       .then((data) => {
         setTea(data);
@@ -101,7 +101,7 @@ function App() {
   const [profitLoss, setProfitLoss] = useState({});
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/profit_loss")
+    fetch("https://glacial-shelf-52388.herokuapp.com/profit_loss")
       .then((res) => res.json())
       .then((data) => {
         setProfitLoss(data);
@@ -120,7 +120,7 @@ function App() {
 // GET TEA PROFIT LOSS DATA
   const [teaProfitLoss, setTeaProfitLoss] = useState({});
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/last_month")
+    fetch("https://glacial-shelf-52388.herokuapp.com/last_month")
       .then((res) => res.json())
       .then((data) => {
         setTeaProfitLoss(data);

@@ -12,7 +12,7 @@ export default function AuthProvider({ children }) {
 // login
 const login = (email, password) => {
    
-    fetch("http://127.0.0.1:3000/login", {
+    fetch("https://glacial-shelf-52388.herokuapp.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const login = (email, password) => {
 
     // Register
     const register = (name, email, phone, password) => {
-      fetch('http://127.0.0.1:3000/admins', {
+      fetch('https://glacial-shelf-52388.herokuapp.com/admins', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'

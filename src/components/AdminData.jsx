@@ -18,7 +18,7 @@ export const useAdminData = () => {
       const user = JSON.parse(sessionStorage.getItem('user'));
       const adminId = user.id;
     
-      fetch(`http://localhost:3000/admins/${adminId}`, {
+      fetch(`https://glacial-shelf-52388.herokuapp.com/admins/${adminId}`, {
         method: 'PATCH',
         body: formData,
       })
@@ -43,7 +43,7 @@ export const useAdminData = () => {
       const user = JSON.parse(sessionStorage.getItem('user'));
       const adminId = user.id;
     
-      fetch(`http://localhost:3000/admins/${adminId}`, {
+      fetch(`https://glacial-shelf-52388.herokuapp.com/admins/${adminId}`, {
         method: 'PATCH',
         body: data,
         headers: {
@@ -83,7 +83,7 @@ export const useAdminData = () => {
   
     // Get admins
     useEffect(() => {
-      fetch('http://localhost:3000/admins')
+      fetch('https://glacial-shelf-52388.herokuapp.com/admins')
         .then((res) => res.json())
         .then((data) => {
           setAdmins(data);

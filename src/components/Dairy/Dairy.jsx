@@ -63,7 +63,7 @@ function Dairy({ cow, setCow, admins, setAdmins }) {
     data.append('admin_id', adminId)
     data.append('image', image)
 
-    fetch('http://localhost:3000/cows', {
+    fetch('https://glacial-shelf-52388.herokuapp.com/cows', {
       method: 'POST',
       body: data
     })
@@ -105,7 +105,7 @@ function Dairy({ cow, setCow, admins, setAdmins }) {
     const formData = new FormData();
     formData.append('image', image);
 
-    fetch(`http://localhost:3000/cows/${selectedCow.id}`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/cows/${selectedCow.id}`, {
       method: 'PATCH',
       body: formData,
     })
@@ -125,7 +125,7 @@ function Dairy({ cow, setCow, admins, setAdmins }) {
 
   const updateFields = () => {
     const data = JSON.stringify({ name: selectedCow.name, health: selectedCow.health, age: selectedCow.age, breed: selectedCow.breed });
-    fetch(`http://localhost:3000/cows/${selectedCow.id}`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/cows/${selectedCow.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

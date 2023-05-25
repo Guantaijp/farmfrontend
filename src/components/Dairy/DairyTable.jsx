@@ -53,7 +53,7 @@ function DairyTable({ cow, admins, setAdmins }) {
             date: formattedDate,
             admin_id: user.id
         };
-        fetch('http://localhost:3000/milk', {
+        fetch('https://glacial-shelf-52388.herokuapp.com/milk', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ function DairyTable({ cow, admins, setAdmins }) {
     const [milk, setMilk] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/milks')
+        fetch('https://glacial-shelf-52388.herokuapp.com/milks')
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('Failed to fetch milk');

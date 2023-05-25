@@ -60,7 +60,7 @@ function AnimalTable({ admins, monthlyAdminTotalsForAdminPrice }) {
       admin_id: admin.id,
     };
 
-    fetch("http://localhost:3000/cost", {
+    fetch("https://glacial-shelf-52388.herokuapp.com/cost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(costData),
@@ -90,7 +90,7 @@ function AnimalTable({ admins, monthlyAdminTotalsForAdminPrice }) {
   const [sell, setSell] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/sells')
+    fetch('https://glacial-shelf-52388.herokuapp.com/sells')
       .then((res) => res.json())
       .then((data) => {
         setSell(data);
@@ -161,7 +161,7 @@ function AnimalTable({ admins, monthlyAdminTotalsForAdminPrice }) {
   const [adminSells, setAdminSells] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/admin_sell')
+    fetch('https://glacial-shelf-52388.herokuapp.com/admin_sell')
       .then((res) => res.json())
       .then((data) => {
         setAdminSells(data);

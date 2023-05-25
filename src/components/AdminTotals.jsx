@@ -4,7 +4,7 @@ const Dashboard = ({ admins }) => {
     const [adminTotals, setAdminTotals] = useState({});
 
     useEffect(() => {
-        fetch("http://localhost:3000/admin_sell")
+        fetch("https://glacial-shelf-52388.herokuapp.com/admin_sell")
             .then((res) => res.json())
             .then((data) => {
                 setAdminTotals(data);

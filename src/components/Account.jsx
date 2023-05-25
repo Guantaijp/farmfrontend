@@ -44,7 +44,7 @@ function Account({ cow, setCow, tea }) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const adminId = user.id;
 
-    fetch(`http://localhost:3000/admins/${adminId}`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/admins/${adminId}`, {
       method: 'PATCH',
       body: formData,
     })
@@ -69,7 +69,7 @@ function Account({ cow, setCow, tea }) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const adminId = user.id;
 
-    fetch(`http://localhost:3000/admins/${adminId}`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/admins/${adminId}`, {
       method: 'PATCH',
       body: data,
       headers: {
@@ -111,7 +111,7 @@ function Account({ cow, setCow, tea }) {
 
   // Get admins
   useEffect(() => {
-    fetch('http://localhost:3000/admins')
+    fetch('https://glacial-shelf-52388.herokuapp.com/admins')
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch admins');
@@ -144,7 +144,7 @@ function Account({ cow, setCow, tea }) {
   // =====DELETE A COW===== //
   const handleDelete = () => {
     // Delete cow and update state
-    fetch(`http://localhost:3000/cows/${selectedCowId}`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/cows/${selectedCowId}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
@@ -176,7 +176,7 @@ function Account({ cow, setCow, tea }) {
   // =====DELETE A FARM===== //
   const handleDeleteFarm = () => {
     // Delete farm and update state
-    fetch(`http://localhost:3000/tea/${selectedFarmId}`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/tea/${selectedFarmId}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
@@ -222,7 +222,7 @@ function Account({ cow, setCow, tea }) {
       admin_id: admin.id,
     };
 
-    fetch(`http://localhost:3000/prices`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/prices`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ function Account({ cow, setCow, tea }) {
   const [prices, setPrices] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/prices')
+    fetch('https://glacial-shelf-52388.herokuapp.com/prices')
       .then((res) => res.json())
       .then((data) => {
         setPrices(data);
@@ -280,7 +280,7 @@ function Account({ cow, setCow, tea }) {
       admin_id: admin.id,
     };
 
-    fetch(`http://127.0.0.1:3000/tea_prices`, {
+    fetch(`https://glacial-shelf-52388.herokuapp.com/tea_prices`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -308,7 +308,7 @@ function Account({ cow, setCow, tea }) {
   const [pricesFarm, setPricesFarm] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:3000/tea_prices')
+    fetch('https://glacial-shelf-52388.herokuapp.com/tea_prices')
       .then((res) => res.json())
       .then((data) => {
         setPricesFarm(data);

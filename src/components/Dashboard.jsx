@@ -10,7 +10,7 @@ const Dashboard = ({monthlyAdminTotalsForAdminPrice, monthlyAdminTeaTotalsForAdm
     datasets: [
       {
         label: 'Milk Amount Price',
-        data: monthlyAdminTotalsForAdminPrice.map(([_, totals]) => totals.milk_amount_price), // Array of milk_amount_price values
+        data: monthlyAdminTotalsForAdminPrice.map(([_, totals]) => totals?.milk_amount_price), // Array of milk_amount_price values
         fill: false,
         borderColor: 'blue',
       },
