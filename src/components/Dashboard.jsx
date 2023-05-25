@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 
-const Dashboard = ({monthlyAdminTotalsForAdminPrice }) => {
+const Dashboard = ({monthlyAdminTotalsForAdminPrice, monthlyAdminTeaTotalsForAdminPrice }) => {
 
 
   const data = {
@@ -23,7 +23,7 @@ const Dashboard = ({monthlyAdminTotalsForAdminPrice }) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Milk Amount Price',
+          text: 'Milk  Price',
         },
       },
       x: {
@@ -34,6 +34,40 @@ const Dashboard = ({monthlyAdminTotalsForAdminPrice }) => {
       },
     },
   };
+  
+
+  const data2 = {
+    labels: monthlyAdminTeaTotalsForAdminPrice.map(([month, _]) => month), // Array of months
+    datasets: [
+      {
+        label: 'Tea Kilograms',
+        data: monthlyAdminTeaTotalsForAdminPrice.map(([_, totals]) => totals), // Array of tea_amount_price values
+        fill: false,
+        borderColor: 'blue',
+      },
+    ],
+  };
+
+  const options2 = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Tea Kilos',
+        },
+
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Month',
+        },
+      },
+    },
+  };
+
+
 
 
 
@@ -51,6 +85,16 @@ const Dashboard = ({monthlyAdminTotalsForAdminPrice }) => {
         </div>
       </div>
     </div>
+    <div className="flex flex-row flex-wrap m-4 justify-center gap-5">
+      <div className="overflow-hidden rounded-lg shadow-lg ml-20 mt-9 mx-9 w-2/3 h-half ">
+        <div className="bg-neutral-50 py-4 px-9 text-center font-bold dark:bg-neutral-900 dark:text-neutral-800">
+          Tea chart
+          </div>
+        <div className="bg-white">
+          <Line data={data2} options={options2} />
+          </div>
+          </div>
+          </div>
   </div>
 </>
 

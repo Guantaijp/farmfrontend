@@ -115,6 +115,23 @@ function App() {
   const monthlyAdminTotalsForAdminPrice = monthlyAdminTotalPrice.map(([month, adminTotals]) => {
     return [month, adminTotals[admin.id]];
   });
+  //  console.log(monthlyAdminTotalsForAdminPrice);
+
+// GET TEA PROFIT LOSS DATA
+  const [teaProfitLoss, setTeaProfitLoss] = useState({});
+  useEffect(() => {
+    fetch("http://127.0.0.1:3000/last_month")
+      .then((res) => res.json())
+      .then((data) => {
+        setTeaProfitLoss(data);
+      });
+  }, []);
+
+  const monthlyAdminTeaTotal = Object.entries(teaProfitLoss.monthly_admin_totals || {});
+  const monthlyAdminTeaTotalsForAdminPrice = monthlyAdminTeaTotal.map(([month, adminTotals]) => {
+    return [month, adminTotals[admin.id]];
+  });
+  // console.log(monthlyAdminTeaTotalsForAdminPrice);
 
 
 
@@ -145,7 +162,7 @@ function App() {
         <Routes className="">
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard  admins = {admins} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice}/> ]} />
+          <Route path="/" element={[<SideBar visible={ navVisible } show={ showNavbar } />,<Dashboard  admins = {admins} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice} monthlyAdminTeaTotalsForAdminPrice={monthlyAdminTeaTotalsForAdminPrice}/> ]} />
           <Route path="/account" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Account cow={cow} setCow={setCow} price={price} admins={admins} setAdmins={setAdmins} tea={tea}/>]} />
           <Route path="/input" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<AnimalTable admins={admins} setAdmins={setAdmins} cost={cost} setCost={setCost} sell={sell} setSell={setSell} monthlyAdminTotalsForAdminPrice={monthlyAdminTotalsForAdminPrice} />]} />
           <Route path="/dairy" element={[	<SideBar visible={ navVisible } show={ showNavbar } />,<Dairy cow={cow} setCow={setCow} admins={admins} setAdmins={setAdmins} />]} />

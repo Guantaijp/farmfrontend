@@ -149,6 +149,7 @@ const todayMilk = milkData.filter((milk) => milk.date === moment(new Date()).for
                                 <th className="px-4 py-2">Cow Breed</th>
                                 <th className="px-4 py-2">Milk Kgs</th>
                                 <th className="px-4 py-2">Date</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -171,7 +172,8 @@ const todayMilk = milkData.filter((milk) => milk.date === moment(new Date()).for
                                         {ownedCows.find((cow) => cow.id === milk.cow_id).breed}
                                     </td>
                                     <td className="border px-4 py-2">{milk.amount}</td>
-                                    <td className="border px-4 py-2">{milk.date}</td>
+                                    <td className="border px-4 py-2">{moment(milk.date).format("MMM Do YY")}</td>
+
                                 </tr>
                             ))}
 

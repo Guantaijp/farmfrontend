@@ -83,7 +83,7 @@ function SideBar({ visible, show }) {
                   Dashboard
                 </h1>
               </Link>
-              <div className="relative">
+              <div className="relative  mb-8">
                 <div className="flex flex-row" onClick={toggleDropdown}>
                   <GiCow className="text-3xl text-white hover:text-gray-400 mr-2 cursor-pointer" />
                   <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400 cursor-pointer">
@@ -92,7 +92,7 @@ function SideBar({ visible, show }) {
                   <span className="ml-2">&#9660;</span>
                 </div>
                 {isOpen && (
-                  <div className="absolute left-0 mb-8  bg-white text-gray-800 rounded shadow-md">
+                  <div className=" mb-8  bg-white text-gray-800 rounded shadow-md">
                     <ul className="py-2 px-3">
                       <li>
                         <Link to="/dairytable" className="cursor-pointer font-bold hover:bg-gray-200 py-1">
@@ -114,7 +114,7 @@ function SideBar({ visible, show }) {
                 )}
               </div>
 
-              <div className="relative">
+              <div className="relative mb-8">
                 <div className="flex flex-row" onClick={toggleTeaDropdown}>
                 <SiGitea className="text-3xl text-white hover:text-gray-400 mr-2" />
                   <h1 className="text-start text-2xl font-bold text-white hover:text-gray-400 cursor-pointer">
@@ -123,7 +123,7 @@ function SideBar({ visible, show }) {
                   <span className="ml-2">&#9660;</span>
                 </div>
                 {isTeaOpen && (
-                  <div className="absolute left-0  mb-8  bg-white text-gray-800 rounded shadow-md">
+                  <div className="mb-8  bg-white text-gray-800 rounded shadow-md">
                     <ul className="py-2 px-3">
                       <li>
                         <Link to="/teatable" className="cursor-pointer font-bold hover:bg-gray-200 py-1">

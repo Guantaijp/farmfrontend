@@ -52,17 +52,17 @@ function TeaTable({ tea, setTea, admins }) {
   const selectedFarm = tea.find((farm) => farm.id === Number(selectedFarmId)) || {}
 
 
-  const submitPickedTea = async (e) => {
-    e.preventDefault()
-
+  const submitPickedTea = (e) => {
+    e.preventDefault();
+  
     const pickedTea = {
-      kilo : kilo,
-      price : pay,
-      date : pickDate,
-      admin_id : adminId,
-      tea_id : selectedFarmId
-    }
-
+      kilo: kilo,
+      price: pay,
+      date: pickDate,
+      admin_id: adminId,
+      tea_id: selectedFarmId
+    };
+  
     fetch('http://127.0.0.1:3000/tea_picks', {
       method: 'POST',
       headers: {
@@ -70,24 +70,63 @@ function TeaTable({ tea, setTea, admins }) {
       },
       body: JSON.stringify(pickedTea),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
+      .then((res) => {
+        if (res.ok) {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'Picked Tea Added Successfully',
-          })
-          setKilo("")
-          setPay("")
-          setPickDate("")
-          setSelectedFarmId("")
+            text: 'Tea Picked Successfully',
+          });
+  
+          // Fetch the updated data immediately after posting
+          fetch('http://127.0.0.1:3000/tea_picks')
+            .then((response) => response.json())
+            .then((updatedTeaPicks) => {
+              setPickedTea(updatedTeaPicks);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+  
+          setKilo('');
+          setPay('');
+          setPickDate('');
+          setSelectedFarmId('');
+        } else {
+          throw new Error('Error posting picked tea');
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
+
+
+
+  
+
+  //==== GET PICKED TEA ====//
+  const [pickedTea, setPickedTea] = useState([])
+  const [totalKilo, setTotalKilo] = useState(0)
+  const [totalPay, setTotalPay] = useState(0)
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:3000/total')
+      .then((res) => res.json())
+      .then((data) => {
+        setPickedTea(data)
       })
       .catch((err) => {
         console.log(err)
       })
-  }
+  }, [])
+
+  // console.log(pickedTea)
+  //get picked tea for the logged in admin
+   const adminPickedTea = pickedTea.filter((tea) => tea.admin_id === adminId)
+   console.log(adminPickedTea)
+
 
 
 
@@ -112,14 +151,21 @@ function TeaTable({ tea, setTea, admins }) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="border px-4 py-2">1</td>
-                <td className="border px-4 py-2">1</td>
-                <td className="border px-4 py-2">1</td>
-                <td className="border px-4 py-2">1</td>
-                <td className="border px-4 py-2">1</td>
-              </tr>
-
+              {adminPickedTea.map((tea) => (
+                <tr key={tea.id}>
+                  <td className="border px-3 py-2">
+                    <img
+                      src={tea.tea.image_url}
+                      alt=""
+                      className="w-10 h-10 rounded-full"
+                    />
+                  </td>
+                  <td className="border px-4 py-2">{tea.tea.name}</td>
+                  <td className="border px-4 py-2">{tea.tea.location}</td>
+                  <td className="border px-4 py-2">{tea.kilo}</td>
+                  <td className="border px-4 py-2">{moment(tea.date).format("MMM Do YY")}</td>
+                </tr>
+              ))}
             </tbody>
 
           </table>
@@ -183,7 +229,6 @@ function TeaTable({ tea, setTea, admins }) {
                   filterDate={filterPassedTime}
                   selected={pickDate}
                   onChange={date => setPickDate(date)}
-                  required  
                 />
               </div>
             </div>
